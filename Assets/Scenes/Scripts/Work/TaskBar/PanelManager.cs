@@ -5,21 +5,25 @@ using UnityEngine;
 public class PanelManager : MonoBehaviour
 {
 	public GameObject Panel;
+    public static bool isBlocked = false;
 	
     public void HidePanel()
     {
-        Panel.SetActive(false);
+        if (!isBlocked) Panel.SetActive(false);
 	}
 
     public void ShowPanel()
     {
-        Panel.SetActive(true);
+        if (!isBlocked) Panel.SetActive(true);
 	}
 
     public void TogglePanel()
     {
-        bool isActive = Panel.activeSelf;
-        Panel.SetActive(!isActive);
+        if (!isBlocked){
+            bool isActive = Panel.activeSelf;
+            Panel.SetActive(!isActive);
+        }
+
 	}
 
 
