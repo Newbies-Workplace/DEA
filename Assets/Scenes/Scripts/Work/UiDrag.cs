@@ -8,6 +8,7 @@ public class UiDrag : MonoBehaviour, IPointerDownHandler, IEndDragHandler, IDrag
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private RectTransform DesktopPanel;
     [SerializeField] private RectTransform TaskBarPanel;
+    public static bool canDrag = true; 
     private Canvas canvas;
     private float DragXPosition;
     private float DragYPosition;
@@ -33,41 +34,42 @@ public class UiDrag : MonoBehaviour, IPointerDownHandler, IEndDragHandler, IDrag
     }
 
     public void OnDrag(PointerEventData eventData){
+        if(canDrag){
+            objectWidth = rectTransform.rect.width;
+            objectHeight = rectTransform.rect.height;
 
-        objectWidth = rectTransform.rect.width;
-        objectHeight = rectTransform.rect.height;
+            panelWidth = DesktopPanel.rect.width;
+            panelHeight = DesktopPanel.rect.height;
 
-        panelWidth = DesktopPanel.rect.width;
-        panelHeight = DesktopPanel.rect.height;
+            TaskBarHeight = TaskBarPanel.rect.height;
+            TaskBarWidth = TaskBarPanel.rect.width;
 
-        TaskBarHeight = TaskBarPanel.rect.height;
-        TaskBarWidth = TaskBarPanel.rect.width;
-
-        DragXPosition = (rectTransform.anchoredPosition.x + eventData.delta.x) / canvas.scaleFactor;
-        DragYPosition = (rectTransform.anchoredPosition.y + eventData.delta.y) / canvas.scaleFactor;
- 
-        if (DragXPosition <= -(panelWidth-objectWidth)/2)
-        {
-            DragXPosition = -(panelWidth-objectWidth)/2;
+            DragXPosition = (rectTransform.anchoredPosition.x + eventData.delta.x) / canvas.scaleFactor;
+            DragYPosition = (rectTransform.anchoredPosition.y + eventData.delta.y) / canvas.scaleFactor;
+    
+            if (DragXPosition <= -(panelWidth-objectWidth)/2)
+            {
+                DragXPosition = -(panelWidth-objectWidth)/2;
+            }
+    
+            if (DragXPosition >= (panelWidth-objectWidth)/2)
+            {
+                DragXPosition = (panelWidth-objectWidth)/2;
+            }
+    
+            if (DragYPosition <= -(panelHeight-objectHeight)/2)
+            {
+                DragYPosition = -(panelHeight-objectHeight)/2;
+            }
+    
+            if (DragYPosition >= ((panelHeight-objectHeight)/2)-TaskBarHeight)
+            {
+                DragYPosition = ((panelHeight-objectHeight)/2)-TaskBarHeight;
+            }
+    
+    
+            rectTransform.anchoredPosition = new Vector2(DragXPosition, DragYPosition);
         }
- 
-        if (DragXPosition >= (panelWidth-objectWidth)/2)
-        {
-            DragXPosition = (panelWidth-objectWidth)/2;
-        }
- 
-        if (DragYPosition <= -(panelHeight-objectHeight)/2)
-        {
-            DragYPosition = -(panelHeight-objectHeight)/2;
-        }
- 
-        if (DragYPosition >= ((panelHeight-objectHeight)/2)-TaskBarHeight)
-        {
-            DragYPosition = ((panelHeight-objectHeight)/2)-TaskBarHeight;
-        }
- 
- 
-        rectTransform.anchoredPosition = new Vector2(DragXPosition, DragYPosition);
     }
 
     public void OnEndDrag(PointerEventData eventData){

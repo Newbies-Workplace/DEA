@@ -7,20 +7,21 @@ using TMPro;
 
 
 public class QuickTimeEvent : MonoBehaviour
-{
+{   
+    public int KeyToPress = 0; // 0 = c , 1 = p;
     public int maximum;
     public int current;
     public Image mask;
     [SerializeField] private GameObject QtePanel;
     [SerializeField] private TMP_Text percentage_text;
 
-    void Start(){
-        PanelManager.isBlocked = true;
-    }
-
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C)) current++;
+        if (KeyToPress == 0){
+            if (Input.GetKeyDown(KeyCode.C)) current++;
+        }else if (KeyToPress == 1){
+            if (Input.GetKeyDown(KeyCode.P)) current++;
+        }
         GetCurrentFill();
         FillPercent();
 
@@ -28,7 +29,13 @@ public class QuickTimeEvent : MonoBehaviour
             current = 0;
             QtePanel.SetActive(false);
             PanelManager.isBlocked  = false;
-            PcActivitiesHandler.IsTextInClipboard = true;
+            if(PcActivitiesHandler.IsTextInClipboard){
+                PcActivitiesHandler.IsTextInClipboard = false;
+                WorkHandler.isWorkDone = true;
+            }else{
+                PcActivitiesHandler.IsTextInClipboard = true;
+            }
+            
         }
     }
 

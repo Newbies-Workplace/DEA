@@ -7,6 +7,7 @@ public class WorkHandler : MonoBehaviour
     public GameObject player; // needed for Distance Check
     public GameObject heart; // needed for Distance Check
     public GameObject WorkPanel;
+    public static bool isWorkDone = false;
 
     bool isNear(int max_dist, GameObject target, GameObject heart){
         float distance = Vector3.Distance(heart.transform.position, target.transform.position);
@@ -30,6 +31,14 @@ public class WorkHandler : MonoBehaviour
 
             }
         }
+
+        if(isWorkDone){
+            PcActivitiesHandler.IsWorkDone = true;
+        }else{
+            PcActivitiesHandler.IsWorkDone = false;
+        }
+
+
     }
 
 
