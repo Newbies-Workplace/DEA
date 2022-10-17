@@ -7,28 +7,57 @@ using TMPro;
 public class PcActivitiesHandler : MonoBehaviour
 {
     public static bool IsTextInClipboard = false;
-    [SerializeField] private TMP_Text CopyCode_Button_Text;
+    public static bool IsWorkDone = false;
+    [SerializeField] private TMP_Text CodeTextToCopy;
     [SerializeField] private Button CopyCode_Button;
-
-
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject qte_copy;
+    [SerializeField] private GameObject qte_paste;
+    [SerializeField] private Button Paste_Button;
+    [SerializeField] private TMP_Text CodeTextToPaste;
 
     void Update()
     {
-        CopiedHandler();
+        IsWorkDoneHandler();
+        if(!IsWorkDone){
+            CodeHandler();
+            Qte_handlers();
+        }
+
+        
     }
 
 
-    void CopiedHandler(){
-        if(IsTextInClipboard){
-            CopyCode_Button_Text.text = "Copied";
+    void Qte_handlers(){
+        bool isActive_copy = qte_copy.activeSelf;
+        bool isActive_paste = qte_paste.activeSelf;
+
+        if(isActive_copy || isActive_paste){
+            PanelManager.isBlocked = true;
+            UiDrag.canDrag = false;
+        }else{
+            PanelManager.isBlocked = false;
+            UiDrag.canDrag = true;
+        }
+    }
+
+    void IsWorkDoneHandler(){
+        if(IsWorkDone){
             CopyCode_Button.interactable = false;
+            Paste_Button.interactable = false;
+            CodeTextToCopy.text = "Copied";
+            CodeTextToPaste.text = "Pasted";
+        }
+    }
+
+    void CodeHandler(){
+        if(IsTextInClipboard){
+            CodeTextToCopy.text = "Copied";
+            CopyCode_Button.interactable = false;
+            Paste_Button.interactable = true;
         } else {
-            CopyCode_Button_Text.text = "Copy Code";
+            CodeTextToCopy.text = "Copy Code";
             CopyCode_Button.interactable = true;
+            Paste_Button.interactable = false;
         }
     }
 }

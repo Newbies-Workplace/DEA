@@ -26,5 +26,16 @@ public class PanelManager : MonoBehaviour
 
 	}
 
+    public void ToggleApplication()
+    {
+        if (!isBlocked){
+            bool isActive = Panel.activeSelf;
+            RectTransform rectTransform = Panel.GetComponent<RectTransform>();
+            Panel.SetActive(!isActive);
+            rectTransform.SetAsLastSibling();
+        }
+
+	}
+
 
 }
