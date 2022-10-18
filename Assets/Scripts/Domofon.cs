@@ -5,11 +5,11 @@ using UnityEngine;
 public class Domofon : MonoBehaviour
 {
     public bool isOpened = false;  
+    
     public void Start()
     {
-        
-    }
 
+    }
 
     public void Answear(){
 
@@ -31,5 +31,6 @@ public class Domofon : MonoBehaviour
             //punkty reputacji -
             }
         }
-    }
 
+   
+}
