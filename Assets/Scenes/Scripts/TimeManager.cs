@@ -5,6 +5,7 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
     int hour, minute, day; 
+    public static int day_start_hour = 8;
     bool checkTime = false;
     public int EndDayValue = 9;
     public int FinalEndDayValue = 10;
@@ -21,8 +22,7 @@ public class TimeManager : MonoBehaviour
 
     private void GameManagerOnOnGameStateChanged(GameState state){
         if(state == GameState.WorkTime) checkTime = true;
-        State = state;
-        
+        State = state;   
     }
 
     void Update()
@@ -44,4 +44,5 @@ public class TimeManager : MonoBehaviour
             GameManager.Instance.UpdateGameState(GameState.DaySummary);
         }
     }
+
 }
