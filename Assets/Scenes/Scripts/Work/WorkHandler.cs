@@ -19,8 +19,6 @@ public class WorkHandler : MonoBehaviour
     {
         bool isActive = WorkPanel.activeSelf;
         ThirdPersonController.can_move = !isActive;
-        InGameTimer.visible = !isActive;
-        CodeStatusHandler.visible = !isActive;
         ThirdPersonController.can_move_camera = !isActive;
 
         if(isNear(4, player, heart)){
