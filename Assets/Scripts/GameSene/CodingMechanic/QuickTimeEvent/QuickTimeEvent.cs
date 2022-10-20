@@ -31,7 +31,7 @@ public class QuickTimeEvent : MonoBehaviour
             PanelManager.isBlocked  = false;
             if(PcActivitiesHandler.IsTextInClipboard){
                 PcActivitiesHandler.IsTextInClipboard = false;
-                Coding.isWorkDone = true;
+                Coding.isDone = true;
             }else{
                 PcActivitiesHandler.IsTextInClipboard = true;
             }

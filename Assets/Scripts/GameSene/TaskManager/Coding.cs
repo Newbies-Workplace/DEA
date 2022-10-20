@@ -9,7 +9,7 @@ public class Coding : MonoBehaviour
     public GameObject player;
     public GameObject heart; 
     public GameObject WorkPanel;
-    public static bool isWorkDone = false;
+
 
     //need for task
     private GameObject task;
@@ -20,8 +20,8 @@ public class Coding : MonoBehaviour
     private string taskdescription = "Go to ur Desk and do MAGIC bruh!";
 
     //task check variables
-    public bool TimesUp = false;
-    public bool isDone = false;
+    public static bool TimesUp = false;
+    public static bool isDone = false;
     private bool QuestActive;
 
 
@@ -39,13 +39,14 @@ public class Coding : MonoBehaviour
     }
 
     private void TaskComplete(){
-        Debug.Log("TaskComplete");
+        Debug.Log("TaskComplete"); // reputation or something else and aojdasiodsadisa
         PcActivitiesHandler.IsWorkDone = true;
         DestroyTask();
     }
 
     private void TaskFailed(){
-        Debug.Log("TaskFailed");
+        Debug.Log("TaskFailed"); // reputation or something else and aojdasiodsadisa
+        PcActivitiesHandler.IsWorkDone = true;
         DestroyTask();   
     }
 
