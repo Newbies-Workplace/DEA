@@ -10,7 +10,6 @@ public class Coding : MonoBehaviour
     public GameObject heart; 
     public GameObject WorkPanel;
 
-
     //need for task
     private GameObject task;
     private int hour = 2; 
