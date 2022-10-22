@@ -17,7 +17,7 @@ public class TaskTimer : MonoBehaviour{
             if(timeRemaining > 0 ){
                 timeRemaining -= Time.deltaTime * 30;
                 DisplayTime(timeRemaining);
-            }else{
+            }else if (timeRemaining < 0){
                 Coding.TimesUp = true;
             }
 
