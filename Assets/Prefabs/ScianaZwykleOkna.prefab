@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3081326156412641159}
-  - component: {fileID: 3721432724739531517}
   m_Layer: 0
   m_Name: ScianaZwykleOkna
   m_TagString: Untagged
@@ -33,19 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3721432724739531517
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1653619067761033240}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.4895755, y: 4.843808, z: 8.688883}
-  m_Center: {x: -0.3906309, y: 2.3489938, z: -0.011190414}
 --- !u!1001 &3643401687640325227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,3 +98,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d2dc5e44ab01794a829622f5e48360c, type: 3}
   m_PrefabInstance: {fileID: 3643401687640325227}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4882839577367312867 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 1d2dc5e44ab01794a829622f5e48360c, type: 3}
+  m_PrefabInstance: {fileID: 3643401687640325227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2071651147583721909
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4882839577367312867}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.421364, y: 4.7530737, z: 8.6753845}
+  m_Center: {x: -0.396646, y: 2.353416, z: -0.011678457}
