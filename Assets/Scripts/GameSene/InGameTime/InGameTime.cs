@@ -14,7 +14,7 @@ public class InGameTime : MonoBehaviour
 
     void Update(){  
 
-        seccond += Time.deltaTime * 30;
+        seccond += Time.deltaTime * 190;
         
 
         if (seccond >= 60){

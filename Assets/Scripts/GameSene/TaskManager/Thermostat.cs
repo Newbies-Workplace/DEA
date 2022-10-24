@@ -23,7 +23,7 @@ public class Thermostat : MonoBehaviour
     private string taskdescription = "Change tempeture in my room to 40*C ASAP! IM FREEZING";
 
     //task check variables
-    public static bool TimesUp = false;
+    public bool TimesUp = false;
     public static bool isDone = false;
     public static int TaskGoal = 40;
     private bool QuestActive;
@@ -42,34 +42,37 @@ public class Thermostat : MonoBehaviour
     }
 
     private void DisablePlayer(){
-        bool isActive = ThermoPanel.activeSelf;
-        ThirdPersonController.can_move = !isActive;
-        ThirdPersonController.can_move_camera = !isActive;
+        if(ThermoPanel.activeSelf){
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = false;
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = false;
+        }else{
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = true;
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = true;
+        }
     }
 
 
     private void InnitTask(){
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
-        TaskTimer.hour = hour;
-        TaskTimer.minute = minute;
-        TaskTimer.isRunning = true;
+        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
+        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
+        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
     }
 
     private void CheckTaskStatus(){
+        TimesUp = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().TimesUp;
         if(TimesUp && QuestActive) TaskFailed();
         if(isDone && QuestActive) TaskComplete();
     }
 
     private void TaskComplete(){
         Debug.Log("TaskComplete"); // reputation or something else and aojdasiodsadisa
-        //PcActivitiesHandler.IsWorkDone = true;
         DestroyTask();
     }
 
     private void TaskFailed(){
         Debug.Log("TaskFailed"); // reputation or something else and aojdasiodsadisa
-        //PcActivitiesHandler.IsWorkDone = true;
         DestroyTask();   
     }
 
@@ -101,7 +104,7 @@ public class Thermostat : MonoBehaviour
         if (Physics.Raycast(RayForward, out RaycastHit hit, range))
         {
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
-            {
+            { 
                 AccessObject();
             }
         }
@@ -121,6 +124,6 @@ public class Thermostat : MonoBehaviour
                 AccessObject();
             }
         }
-        CheckTaskStatus();
+        if(QuestActive) CheckTaskStatus();
     }
 }

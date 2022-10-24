@@ -14,21 +14,18 @@ public class InputHandler : MonoBehaviour
     public GameObject IdeWindowInside;
     public GameObject ThisWindow;
     [SerializeField] private TMP_InputField PasswordInput; 
-    [SerializeField] private TMP_InputField LoginInput; 
 
     public void Login(){
 
-        if(PasswordInput.text == Password && LoginInput.text != ""){
+        if(PasswordInput.text == Password){
 
             PasswordInput.text = "";
-            LoginInput.text = "";
             ThisWindow.SetActive(false);
             RectTransform rectTransform = IdeWindowInside.GetComponent<RectTransform>();
             IdeWindowInside.SetActive(true);
             rectTransform.SetAsLastSibling();
         }else{
             PasswordInput.text = "";
-            LoginInput.text = "";
         }
 
     }

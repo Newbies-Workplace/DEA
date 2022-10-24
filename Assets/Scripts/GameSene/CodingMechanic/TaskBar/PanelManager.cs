@@ -26,6 +26,12 @@ public class PanelManager : MonoBehaviour
 
 	}
 
+    public void ExitComputer(){
+        if (!isBlocked) Panel.SetActive(false);
+        GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = true;
+        GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = true;
+    }
+
     public void ToggleApplication()
     {
         if (!isBlocked){

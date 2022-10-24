@@ -15,19 +15,26 @@ public class Intercom : MonoBehaviour
     Quaternion leftAngle;
     Quaternion centerAngle;
 
-        //need for task
+    //need for task
     private GameObject task;
     private int hour = 1; 
-    private int minute = 30;
+    private int minute = 2;
     private string taskname = "Intercom";
-    private string tasktitle = "Decide about doors";
+    private string tasktitle = "Intercom";
     private string taskdescription = "Go to the intercom and decide about opening doors";
 
     //task check variables
-    public static bool TimesUp = false;
+    public bool TimesUp = false;
     public static bool isDone = false;
-    //public static int TaskGoal = 40;
-    private bool QuestActive;
+    public static bool QuestActive;
+
+    void Start()
+    {
+        leftAngle = Quaternion.Euler(10,30,0);
+        rightAngle = Quaternion.Euler(10,-30,0);
+        centerAngle = Quaternion.Euler(10,0,0);
+        InnitTask();
+    }
 
     private bool isNear(int max_dist, GameObject target, GameObject heart){
         float distance = Vector3.Distance(heart.transform.position, target.transform.position);
@@ -35,28 +42,53 @@ public class Intercom : MonoBehaviour
         return true;
     }
 
-
-    void Start()
-    {
-        leftAngle = Quaternion.Euler(10,30,0);
-        rightAngle = Quaternion.Euler(10,-30,0);
-        centerAngle = Quaternion.Euler(10,0,0);
+    private void DisablePlayer(){
+        if(Panel.activeSelf){
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = false;
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = false;
+        }else{
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = true;
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = true;
+        }
     }
 
-    private void DisablePlayer(){
-        bool isActive = Panel.activeSelf;
-        ThirdPersonController.can_move = !isActive;
-        ThirdPersonController.can_move_camera = !isActive;
+    private void InnitTask(){
+        QuestActive = true;
+        task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
+        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
+        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
+        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
+
+    }
+
+    private void CheckTaskStatus(){
+        TimesUp = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().TimesUp;
+        if(TimesUp && QuestActive) TaskFailed();
+        if(isDone && QuestActive) TaskComplete();
+    }
+
+    private void TaskComplete(){
+        Debug.Log("TaskComplete"); // reputation or something else and aojdasiodsadisa
+        DestroyTask();
+    }
+
+    private void TaskFailed(){
+        Debug.Log("TaskFailed"); // reputation or something else and aojdasiodsadisa
+        DestroyTask();   
+    }
+
+    private void DestroyTask(){
+        Destroy(task);
+        QuestActive = false;
     }
 
     private void AccessObject(){
-        DisablePlayer();
         if(isNear(2, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(Panel != null) Panel.SetActive(true);
+        DisablePlayer();
     }
 
     void Update()
     {
-
         Vector3 forward = centerAngle*Vector3.forward;
         Vector3 left = leftAngle*Vector3.forward;
         Vector3 right = rightAngle*Vector3.forward;
@@ -72,6 +104,7 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 AccessObject();
+                // if(!isDone) AccessObject();
             }
         }
 
@@ -80,6 +113,7 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 AccessObject();
+                // if(!isDone) AccessObject();
             }
         }
 
@@ -88,8 +122,10 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 AccessObject();
+                // if(!isDone) AccessObject();
             }
         }
+        if(QuestActive) CheckTaskStatus();
 
     }
 }

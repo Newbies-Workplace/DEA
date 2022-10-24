@@ -5,32 +5,34 @@ using TMPro;
 
 public class TaskTimer : MonoBehaviour{
     
-    public static float hour;
-    public static float minute;
-    public static bool isRunning;
+    public float hour;
+    public float minute;
+    public bool isRunning;
     private float timeRemaining = 0;
+    public bool TimesUp = false;
     [SerializeField] private TMP_Text TimerText;       
 
-    void Update(){
+    void Start(){
         ChangeTime();
+    }
+
+    void Update(){
         if(isRunning){
             if(timeRemaining > 0 ){
                 timeRemaining -= Time.deltaTime * 30;
                 DisplayTime(timeRemaining);
             }else if (timeRemaining < 0){
-                Coding.TimesUp = true;
+                TimesUp = true;
             }
 
         }
     }
 
     void ChangeTime(){
-        while(hour !=0 && minute !=0){
-            minute += hour*60;
-            hour = 0;
-            timeRemaining += minute*60;
-            minute = 0;
-        }
+        minute = minute+hour*60;
+        hour = 0;
+        timeRemaining = minute*60;
+        minute = 0;
     }
 
     void DisplayTime(float timeToDisplay){
