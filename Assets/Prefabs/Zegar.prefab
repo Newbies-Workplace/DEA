@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1205078117842969182
+--- !u!1 &8906827863310391275
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1224318748954917246}
+  - component: {fileID: 30431405423015907}
   m_Layer: 0
   m_Name: Zegar
   m_TagString: Untagged
@@ -16,28 +16,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1224318748954917246
+--- !u!4 &30431405423015907
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1205078117842969182}
+  m_GameObject: {fileID: 8906827863310391275}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.351028, y: 3.1153426, z: 32.10777}
+  m_LocalPosition: {x: 21.008678, y: -18.288193, z: -11.567339}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2111170012450532496}
+  - {fileID: 2582251653314750771}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1929467593197833083
+--- !u!1001 &2620172836383280856
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1224318748954917246}
+    m_TransformParent: {fileID: 30431405423015907}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_RootOrder
@@ -45,19 +45,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.3940277
+      value: -5.608679
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.041956663
+      value: 21.178192
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.036231995
+      value: 54.888336
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_LocalRotation.x
@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_LocalRotation.z
@@ -77,20 +77,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5374420075829284643, guid: d45457049c213744087016b9f52d4b07, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b27e9ce97eb039842a8a65d1912e3670, type: 2}
     - target: {fileID: 919132149155446097, guid: d45457049c213744087016b9f52d4b07, type: 3}
       propertyPath: m_Name
       value: zegar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d45457049c213744087016b9f52d4b07, type: 3}
---- !u!4 &2111170012450532496 stripped
+--- !u!4 &2582251653314750771 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d45457049c213744087016b9f52d4b07, type: 3}
-  m_PrefabInstance: {fileID: 1929467593197833083}
+  m_PrefabInstance: {fileID: 2620172836383280856}
   m_PrefabAsset: {fileID: 0}
