@@ -7,7 +7,7 @@ public class ThirdPersonController : MonoBehaviour{
 
     public CharacterController controller;
     public Transform cam;
-    public static bool can_move = true;
+    public bool can_move = true;
     public float speed = 6f;
     public float gravity = -9f;
     public float turnSmoothTime = 0.1f;
@@ -22,7 +22,7 @@ public class ThirdPersonController : MonoBehaviour{
     float turnSmoothVelocity;
     public CinemachineBrain CMBrain;
     public GameObject objectToFind;
-    public static bool can_move_camera = true;
+    public bool can_move_camera = true;
     
 
     void Update(){
@@ -30,7 +30,6 @@ public class ThirdPersonController : MonoBehaviour{
         objectToFind = GameObject.FindGameObjectWithTag("MainCamera");
         CMBrain = objectToFind.GetComponent<CinemachineBrain>();
         CMBrain.enabled = can_move_camera;
-
         if(can_move){
 
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);

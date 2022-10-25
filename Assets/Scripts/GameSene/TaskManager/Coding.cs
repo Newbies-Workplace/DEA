@@ -9,30 +9,35 @@ public class Coding : MonoBehaviour
     public GameObject player;
     public GameObject heart; 
     public GameObject WorkPanel;
+    public GameObject TodoPanel;
 
     //need for task
     private GameObject task;
-    private int hour = 2; 
-    private int minute = 30;
+    private int hour = 0; 
+    private int minute = 15;
     private string taskname = "Coding";
     private string tasktitle = "Coding";
     private string taskdescription = "Go to ur Desk and do MAGIC bruh!";
 
     //task check variables
-    public static bool TimesUp = false;
+    public bool TimesUp = false;
     public static bool isDone = false;
     private bool QuestActive;
 
 
-    private void InnitTask(){
+    public void InnitTask(){
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
-        TaskTimer.hour = hour;
-        TaskTimer.minute = minute;
-        TaskTimer.isRunning = true;
+        if(task != null){
+            task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
+            task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
+            task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
+        }
+
     }
 
     private void CheckTaskStatus(){
+        TimesUp = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().TimesUp;
         if(TimesUp && QuestActive) TaskFailed();
         if(isDone && QuestActive) TaskComplete();
     }
@@ -41,7 +46,7 @@ public class Coding : MonoBehaviour
         Debug.Log("TaskComplete"); // reputation or something else and aojdasiodsadisa
         PcActivitiesHandler.IsWorkDone = true;
         DestroyTask();
-    }
+    } 
 
     private void TaskFailed(){
         Debug.Log("TaskFailed"); // reputation or something else and aojdasiodsadisa
@@ -55,14 +60,11 @@ public class Coding : MonoBehaviour
     }
 
     private void AccessComputer(){
-        DisablePlayer();
-        if(isNear(4, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(WorkPanel != null) WorkPanel.SetActive(true);
-    }
-
-    private void DisablePlayer(){
-        bool isActive = WorkPanel.activeSelf;
-        ThirdPersonController.can_move = !isActive;
-        ThirdPersonController.can_move_camera = !isActive;
+        if(isNear(4, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(WorkPanel != null) {
+            WorkPanel.SetActive(true);
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = false;
+            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = false;
+        }
     }
 
     private bool isNear(int max_dist, GameObject target, GameObject heart){
@@ -71,14 +73,19 @@ public class Coding : MonoBehaviour
         return true;
     }
 
-    void Start(){
-        InnitTask();
+    private void PanelCheckout(){
+        bool isActive = WorkPanel.activeSelf;
+        TodoPanel.SetActive(!isActive);
+
     }
 
     void Update()
     {
-        AccessComputer();
-        CheckTaskStatus();
+        if(QuestActive){
+            CheckTaskStatus();
+            PanelCheckout();
+            AccessComputer();
+        }
         
     }
 }

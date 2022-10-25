@@ -29,7 +29,7 @@ public class TimeManager : MonoBehaviour
     {
         hour = InGameTime.hour;
         minute = InGameTime.minute;
-        day = InGameTime.day;
+        day = InGameTime.day;   
         if(checkTime) DayCycleHandler(State);
     }
 
