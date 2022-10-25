@@ -32,7 +32,6 @@ public class Thermostat : MonoBehaviour
         leftAngle = Quaternion.Euler(10,30,0);
         rightAngle = Quaternion.Euler(10,-30,0);
         centerAngle = Quaternion.Euler(10,0,0);
-        InnitTask();
     }
 
     private bool isNear(int max_dist, GameObject target, GameObject heart){
@@ -52,7 +51,7 @@ public class Thermostat : MonoBehaviour
     }
 
 
-    private void InnitTask(){
+    public void InnitTask(){
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
@@ -105,7 +104,7 @@ public class Thermostat : MonoBehaviour
         {
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             { 
-                AccessObject();
+                if(QuestActive) AccessObject();
             }
         }
 
@@ -113,7 +112,7 @@ public class Thermostat : MonoBehaviour
         {
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
-                AccessObject();
+                if(QuestActive) AccessObject();
             }
         }
 
@@ -121,7 +120,7 @@ public class Thermostat : MonoBehaviour
         {
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
-                AccessObject();
+                if(QuestActive) AccessObject();
             }
         }
         if(QuestActive) CheckTaskStatus();

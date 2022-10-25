@@ -25,7 +25,7 @@ public class Coding : MonoBehaviour
     private bool QuestActive;
 
 
-    private void InnitTask(){
+    public void InnitTask(){
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         if(task != null){
@@ -79,15 +79,13 @@ public class Coding : MonoBehaviour
 
     }
 
-    void Start(){
-        InnitTask();
-    }
-
     void Update()
     {
-        PanelCheckout();
-        AccessComputer();
-        if(QuestActive) CheckTaskStatus();
+        if(QuestActive){
+            CheckTaskStatus();
+            PanelCheckout();
+            AccessComputer();
+        }
         
     }
 }

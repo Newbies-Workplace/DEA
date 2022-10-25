@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Intercom : MonoBehaviour
+public class Coffee : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject heart;
     [SerializeField] private GameObject Panel;
 
-    public float range = 3;
-    int max_dist = 3;
-
+    public float range = 2;
+    int max_dist = 2;
     Quaternion rightAngle;
     Quaternion leftAngle;
     Quaternion centerAngle;
@@ -18,21 +17,20 @@ public class Intercom : MonoBehaviour
     //need for task
     private GameObject task;
     private int hour = 1; 
-    private int minute = 2;
-    private string taskname = "Intercom";
-    private string tasktitle = "Intercom";
-    private string taskdescription = "Go to the intercom and decide about opening doors";
+    private int minute = 30;
+    private string taskname = "Coffee";
+    private string tasktitle = "Coffee";
+    private string taskdescription = "Make me Depresso without milk and sugar.";
 
     //task check variables
     public bool TimesUp = false;
     public static bool isDone = false;
-    public static bool QuestActive;
+    private bool QuestActive;
 
-    void Start()
-    {
-        leftAngle = Quaternion.Euler(10,30,0);
-        rightAngle = Quaternion.Euler(10,-30,0);
-        centerAngle = Quaternion.Euler(10,0,0);
+    void Start(){
+        leftAngle = Quaternion.Euler(20,30,0);
+        rightAngle = Quaternion.Euler(20,-30,0);
+        centerAngle = Quaternion.Euler(20,0,0);
     }
 
     private bool isNear(int max_dist, GameObject target, GameObject heart){
@@ -51,13 +49,13 @@ public class Intercom : MonoBehaviour
         }
     }
 
+
     public void InnitTask(){
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
-
     }
 
     private void CheckTaskStatus(){
@@ -82,12 +80,14 @@ public class Intercom : MonoBehaviour
     }
 
     private void AccessObject(){
-        if(isNear(2, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(Panel != null) Panel.SetActive(true);
         DisablePlayer();
+        if(isNear(4, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(Panel != null) Panel.SetActive(true);
     }
+
 
     void Update()
     {
+
         Vector3 forward = centerAngle*Vector3.forward;
         Vector3 left = leftAngle*Vector3.forward;
         Vector3 right = rightAngle*Vector3.forward;
@@ -97,13 +97,13 @@ public class Intercom : MonoBehaviour
         Debug.DrawRay(transform.position, transform.TransformDirection(forward * range));
         Debug.DrawRay(transform.position, transform.TransformDirection(left * range));
         Debug.DrawRay(transform.position, transform.TransformDirection(right * range));
-        
+
+
         if (Physics.Raycast(RayForward, out RaycastHit hit, range))
         {
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
-            {
+            { 
                 if(QuestActive) AccessObject();
-                // if(!isDone) AccessObject();
             }
         }
 
@@ -112,7 +112,6 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
-                // if(!isDone) AccessObject();
             }
         }
 
@@ -121,10 +120,8 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
-                // if(!isDone) AccessObject();
             }
         }
         if(QuestActive) CheckTaskStatus();
-
     }
 }

@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 public class ChangeDay : MonoBehaviour
 {
     public void NextDay(){
-        //GameManager.Instance.UpdateGameState(GameState.WorkTime); // should be already changed by loading scene 
+        StaticClass.Weekday++;
         SceneManager.LoadScene("Game");
         InGameTime.day++;
     }
 }
+

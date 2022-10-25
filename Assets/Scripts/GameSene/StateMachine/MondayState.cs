@@ -7,6 +7,10 @@ public class MondayState : BaseState
     }
 
     public override void UpdateState(StateManager state){
-        
+        if(InGameTime.hour == 10 && InGameTime.minute == 0){
+            state.SwitchState(state.Tuesday);
+        }
     }
+
+
 }
