@@ -25,8 +25,8 @@ public class Intercom : MonoBehaviour
 
     //task check variables
     public bool TimesUp = false;
-    public static bool isDone = false;
-    public static bool QuestActive;
+    public bool isDone = false;
+    public bool QuestActive = false;
 
     void Start()
     {
@@ -83,11 +83,12 @@ public class Intercom : MonoBehaviour
 
     private void AccessObject(){
         if(isNear(2, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(Panel != null) Panel.SetActive(true);
-        DisablePlayer();
     }
 
     void Update()
     {
+        if(QuestActive) CheckTaskStatus();
+
         Vector3 forward = centerAngle*Vector3.forward;
         Vector3 left = leftAngle*Vector3.forward;
         Vector3 right = rightAngle*Vector3.forward;
@@ -103,6 +104,7 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                DisablePlayer();
                 // if(!isDone) AccessObject();
             }
         }
@@ -112,6 +114,7 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                DisablePlayer();
                 // if(!isDone) AccessObject();
             }
         }
@@ -121,10 +124,10 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                DisablePlayer();
                 // if(!isDone) AccessObject();
             }
         }
-        if(QuestActive) CheckTaskStatus();
 
     }
 }

@@ -5,21 +5,21 @@ using UnityEngine;
 public class PanelManager : MonoBehaviour
 {
 	public GameObject Panel;
-    public static bool isBlocked = false;
+    [SerializeField] private GameObject pc_activities_handler;
 	
     public void HidePanel()
     {
-        if (!isBlocked) Panel.SetActive(false);
+        if (!pc_activities_handler.GetComponent<PcActivitiesHandler>().isBlocked) Panel.SetActive(false);
 	}
 
     public void ShowPanel()
     {
-        if (!isBlocked) Panel.SetActive(true);
+        if (!pc_activities_handler.GetComponent<PcActivitiesHandler>().isBlocked) Panel.SetActive(true);
 	}
 
     public void TogglePanel()
     {
-        if (!isBlocked){
+        if (!pc_activities_handler.GetComponent<PcActivitiesHandler>().isBlocked){
             bool isActive = Panel.activeSelf;
             Panel.SetActive(!isActive);
         }
@@ -27,14 +27,14 @@ public class PanelManager : MonoBehaviour
 	}
 
     public void ExitComputer(){
-        if (!isBlocked) Panel.SetActive(false);
+        if (!pc_activities_handler.GetComponent<PcActivitiesHandler>().isBlocked) Panel.SetActive(false);
         GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = true;
         GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = true;
     }
 
     public void ToggleApplication()
     {
-        if (!isBlocked){
+        if (!pc_activities_handler.GetComponent<PcActivitiesHandler>().isBlocked){
             bool isActive = Panel.activeSelf;
             RectTransform rectTransform = Panel.GetComponent<RectTransform>();
             Panel.SetActive(!isActive);

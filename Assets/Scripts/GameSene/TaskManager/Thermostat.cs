@@ -88,7 +88,8 @@ public class Thermostat : MonoBehaviour
 
     void Update()
     {
-
+        if(QuestActive) CheckTaskStatus();
+    
         Vector3 forward = centerAngle*Vector3.forward;
         Vector3 left = leftAngle*Vector3.forward;
         Vector3 right = rightAngle*Vector3.forward;
@@ -98,13 +99,14 @@ public class Thermostat : MonoBehaviour
         Debug.DrawRay(transform.position, transform.TransformDirection(forward * range));
         Debug.DrawRay(transform.position, transform.TransformDirection(left * range));
         Debug.DrawRay(transform.position, transform.TransformDirection(right * range));
-
-
+        
         if (Physics.Raycast(RayForward, out RaycastHit hit, range))
         {
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
-            { 
+            {
                 if(QuestActive) AccessObject();
+                DisablePlayer();
+                // if(!isDone) AccessObject();
             }
         }
 
@@ -113,6 +115,8 @@ public class Thermostat : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                DisablePlayer();
+                // if(!isDone) AccessObject();
             }
         }
 
@@ -121,8 +125,10 @@ public class Thermostat : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                DisablePlayer();
+                // if(!isDone) AccessObject();
             }
         }
-        if(QuestActive) CheckTaskStatus();
+
     }
 }

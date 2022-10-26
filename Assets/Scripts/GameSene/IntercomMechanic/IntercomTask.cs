@@ -10,9 +10,10 @@ public class IntercomTask : MonoBehaviour
     //-------------------------------
     // main variables
     //-------------------------------
-    public static bool MadeChoice;
-    public static bool Choice;
-    public static bool isTaskActive;
+    public bool MadeChoice;
+    public bool Choice;
+    public bool isTaskActive;
+    [SerializeField] private GameObject intercom_task;
 
     //-------------------------------
     // buttons and buttons and texts
@@ -36,11 +37,11 @@ public class IntercomTask : MonoBehaviour
     }
 
     private void CheckChoice(){
-        if (MadeChoice && !Intercom.isDone) {
+        if (MadeChoice && !intercom_task.GetComponent<Intercom>().isDone) {
             LetButton.interactable = !MadeChoice;
             DontLetButton.interactable = !MadeChoice;
             
-            Intercom.isDone = true;
+            intercom_task.GetComponent<Intercom>().isDone = true;
 
             if (Choice == ChoiceGoal){
                 Debug.Log("+Repuration");
@@ -53,7 +54,7 @@ public class IntercomTask : MonoBehaviour
     }
 
     private void CheckStatus(){
-        isTaskActive = Intercom.QuestActive;
+        isTaskActive = intercom_task.GetComponent<Intercom>().QuestActive;
     }
 
     private void SetUpPanel(){
