@@ -14,6 +14,8 @@ public class QuickTimeEvent : MonoBehaviour
     public Image mask;
     [SerializeField] private GameObject QtePanel;
     [SerializeField] private TMP_Text percentage_text;
+    [SerializeField] private GameObject coding;
+    [SerializeField] private GameObject pc_activities_handler;
 
     void Update()
     {
@@ -28,19 +30,19 @@ public class QuickTimeEvent : MonoBehaviour
         if(current == maximum) {
             current = 0;
             QtePanel.SetActive(false);
-            PanelManager.isBlocked  = false;
-            if(PcActivitiesHandler.IsTextInClipboard){
-                PcActivitiesHandler.IsTextInClipboard = false;
-                Coding.isDone = true;
+            pc_activities_handler.GetComponent<PcActivitiesHandler>().isBlocked = false;
+            if(pc_activities_handler.GetComponent<PcActivitiesHandler>().IsTextInClipboard){
+                pc_activities_handler.GetComponent<PcActivitiesHandler>().IsTextInClipboard = false;
+                coding.GetComponent<Coding>().isDone = true;
             }else{
-                PcActivitiesHandler.IsTextInClipboard = true;
+                pc_activities_handler.GetComponent<PcActivitiesHandler>().IsTextInClipboard = true;
             }
             
         }
     }
 
     void FillPercent(){
-        float percentage = ((current * maximum) /100);
+        float percentage = ((current * 100) /maximum);
         percentage_text.text = percentage + "%";
     }
 

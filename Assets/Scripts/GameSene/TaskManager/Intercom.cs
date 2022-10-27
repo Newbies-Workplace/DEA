@@ -17,16 +17,16 @@ public class Intercom : MonoBehaviour
 
     //need for task
     private GameObject task;
-    private int hour = 1; 
-    private int minute = 2;
+    private int hour = 0; 
+    private int minute = 5;
     private string taskname = "Intercom";
     private string tasktitle = "Intercom";
     private string taskdescription = "Go to the intercom and decide about opening doors";
 
     //task check variables
     public bool TimesUp = false;
-    public static bool isDone = false;
-    public static bool QuestActive;
+    public bool isDone = false;
+    public bool QuestActive = false;
 
     void Start()
     {
@@ -52,6 +52,7 @@ public class Intercom : MonoBehaviour
     }
 
     public void InnitTask(){
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Wojtek [DEA]","When the courier arrives, open the door for him.");
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
@@ -67,12 +68,16 @@ public class Intercom : MonoBehaviour
     }
 
     private void TaskComplete(){
-        Debug.Log("TaskComplete"); // reputation or something else and aojdasiodsadisa
+        Panel.SetActive(false);
+        DisablePlayer();
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Intercom Task Complete","Wojtek: Dzieki, jakos mi sie nie chcialo wstawac XD");
         DestroyTask();
     }
 
     private void TaskFailed(){
-        Debug.Log("TaskFailed"); // reputation or something else and aojdasiodsadisa
+        Panel.SetActive(false);
+        DisablePlayer();
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFaile","Intercom Task Failed","Wojtek: Masz awizo i teraz sam na rowerze jedz po paczke.");
         DestroyTask();   
     }
 
@@ -83,11 +88,12 @@ public class Intercom : MonoBehaviour
 
     private void AccessObject(){
         if(isNear(2, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(Panel != null) Panel.SetActive(true);
-        DisablePlayer();
     }
 
     void Update()
     {
+        if(QuestActive) CheckTaskStatus();
+
         Vector3 forward = centerAngle*Vector3.forward;
         Vector3 left = leftAngle*Vector3.forward;
         Vector3 right = rightAngle*Vector3.forward;
@@ -103,6 +109,7 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                DisablePlayer();
                 // if(!isDone) AccessObject();
             }
         }
@@ -112,6 +119,7 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                DisablePlayer();
                 // if(!isDone) AccessObject();
             }
         }
@@ -121,10 +129,10 @@ public class Intercom : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                DisablePlayer();
                 // if(!isDone) AccessObject();
             }
         }
-        if(QuestActive) CheckTaskStatus();
 
     }
 }

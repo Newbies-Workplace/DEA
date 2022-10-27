@@ -6,21 +6,24 @@ using TMPro;
 
 public class PcActivitiesHandler : MonoBehaviour
 {
-    public static bool IsTextInClipboard = false;
-    public static bool IsWorkDone = false;
+    public bool IsTextInClipboard = false;
+    public bool IsWorkDone = false;
     [SerializeField] private TMP_Text CodeTextToCopy;
     [SerializeField] private Button CopyCode_Button;
     [SerializeField] private GameObject qte_copy;
     [SerializeField] private GameObject qte_paste;
     [SerializeField] private Button Paste_Button;
+    [SerializeField] private Button exit_button;
     [SerializeField] private TMP_Text CodeTextToPaste;
+    
+    public bool isBlocked = false;
 
     void Update()
     {
         IsWorkDoneHandler();
+        Qte_handlers();
         if(!IsWorkDone){
             CodeHandler();
-            Qte_handlers();
         }
 
         
@@ -31,12 +34,16 @@ public class PcActivitiesHandler : MonoBehaviour
         bool isActive_copy = qte_copy.activeSelf;
         bool isActive_paste = qte_paste.activeSelf;
 
+    
+
         if(isActive_copy || isActive_paste){
-            PanelManager.isBlocked = true;
+            exit_button.interactable = false;
+            isBlocked = true;
             UiDrag.canDrag = false;
         }else{
-            PanelManager.isBlocked = false;
+            isBlocked = false;
             UiDrag.canDrag = true;
+            exit_button.interactable = true;
         }
     }
 

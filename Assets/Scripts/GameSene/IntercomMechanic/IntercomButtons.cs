@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class IntercomButtons : MonoBehaviour
 {
+    [SerializeField] private GameObject intercomtask;
+
     public void LetIn(){ // true == let
-        IntercomTask.Choice = true;
-        IntercomTask.MadeChoice = true;
+        intercomtask.GetComponent<IntercomTask>().Choice = true;
+        intercomtask.GetComponent<IntercomTask>().MadeChoice = true;
     }
 
     public void DontLetIn(){ // false == dont
-        IntercomTask.Choice = false;
-        IntercomTask.MadeChoice = true;
+        intercomtask.GetComponent<IntercomTask>().Choice = false;
+        intercomtask.GetComponent<IntercomTask>().MadeChoice = true;
     }
 }

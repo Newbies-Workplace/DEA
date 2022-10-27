@@ -10,15 +10,16 @@ public class WeekStateManager : MonoBehaviour{
     //----------------------------------------------------------------
     //game tasks mechanics 
     //----------------------------------------------------------------
-    [SerializeField] private GameObject Coding;
-    [SerializeField] private GameObject Intercom;
-    [SerializeField] private GameObject Coffee;
-    [SerializeField] private GameObject Thermostatic;
+    [SerializeField] private GameObject coding;
+    [SerializeField] private GameObject intercom;
+    [SerializeField] private GameObject coffee;
+    [SerializeField] private GameObject thermostatic;
 
-    private bool codingTask_task;
-    private bool intercom_task;
-    private bool coffee_task;
-    private bool thermostatic_task;
+    //ONLY NEED IN UPDATE METHOD FOR KNOWNING IS ACTIVATED
+    private bool codingTask_task = false;
+    private bool intercom_task = false;
+    private bool coffee_task = false;
+    private bool thermostatic_task = false;
 
     public State State;
     
@@ -48,27 +49,27 @@ public class WeekStateManager : MonoBehaviour{
         switch (newState) {
             case State.Monday:
                 Debug.Log("Monday");
-                MondayHandler();
+                // MondayHandler();
                 break;
                 
             case State.Tuesday:
                 Debug.Log("Tuesday");
-                TuesdayHandler();
+                // TuesdayHandler();
                 break;
 
             case State.Wednesday:
                 Debug.Log("Wednesday");
-                WednesdayHandler();
+                // WednesdayHandler();
                 break;
                 
             case State.Thursday:
                 Debug.Log("Thursday");
-                ThursdayHandler();
+                // ThursdayHandler();
                 break;
         
             case State.Friday:
                 Debug.Log("Friday");
-                FridayHandler();
+                // FridayHandler();
                 break;
         }
 
@@ -83,55 +84,87 @@ public class WeekStateManager : MonoBehaviour{
         if(StaticClass.Weekday == 5) UpdateState(State.Friday);
     }
 
-    private void MondayHandler(){
-        Coding.GetComponent<Coding>().InnitTask();
-        Intercom.GetComponent<Intercom>().InnitTask();
-        Thermostatic.GetComponent<Thermostat>().InnitTask();
-    }
+    //caling those are here:
+    // coding.GetComponent<Coding>().InnitTask();
+    // coffee.GetComponent<Coffee>().InnitTask();
+    // thermostatic.GetComponent<thermostatic>().InnitTask();
+    // intercom.GetComponent<Intercom>().InnitTask();
 
+    //----------------------------------------------------------------
+    //MONDAY
+    //----------------------------------------------------------------
     private void MondayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
-            Coffee.GetComponent<Coffee>().InnitTask();
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !codingTask_task) {
+            coding.GetComponent<Coding>().InnitTask();
+            codingTask_task = true;
+        }
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
     }
 
-    private void TuesdayHandler(){
-        Coding.GetComponent<Coding>().InnitTask();
-    }
+
+    //----------------------------------------------------------------  
+    //THUESDAY
+    //----------------------------------------------------------------
     private void TuesdayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
-            Coffee.GetComponent<Coffee>().InnitTask();
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !thermostatic_task) {
+            thermostatic.GetComponent<Thermostat>().InnitTask();
+            thermostatic_task = true;
+        }
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
     }
 
-    private void WednesdayHandler(){
-        Coding.GetComponent<Coding>().InnitTask();
-    }
+
+    //----------------------------------------------------------------
+    //WEDNESDAY
+    //----------------------------------------------------------------
     private void WednesdayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
-            Coffee.GetComponent<Coffee>().InnitTask();
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !intercom_task) {
+            intercom.GetComponent<Intercom>().InnitTask();
+            intercom_task = true;
+        }        
+        
+        if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
     }
 
-    private void ThursdayHandler(){
-        Coding.GetComponent<Coding>().InnitTask();
-    }
+
+    //----------------------------------------------------------------
+    //THURSDAY
+    //----------------------------------------------------------------
     private void ThursdayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
-            Coffee.GetComponent<Coffee>().InnitTask();
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !codingTask_task) {
+            coding.GetComponent<Coding>().InnitTask();
+            codingTask_task = true;
+        }
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
     }
 
-    private void FridayHandler(){
-        Coding.GetComponent<Coding>().InnitTask();
-    }
+
+    //----------------------------------------------------------------
+    //FRIDAY
+    //----------------------------------------------------------------
     private void FridayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
-            Coffee.GetComponent<Coffee>().InnitTask();
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !codingTask_task) {
+            coding.GetComponent<Coding>().InnitTask();
+            codingTask_task = true;
+        }
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
     }
