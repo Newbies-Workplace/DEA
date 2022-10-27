@@ -86,7 +86,7 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 40539948c6c53c74a860893d7e3e6acc, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 663834164c6a04740aaa1b778249ce7e, type: 2}
+      objectReference: {fileID: 2100000, guid: 07dc66ae04b7f6a43b9674bf0fefb33a, type: 2}
     - target: {fileID: 919132149155446097, guid: 40539948c6c53c74a860893d7e3e6acc, type: 3}
       propertyPath: m_Name
       value: ScianaZOknami 2
