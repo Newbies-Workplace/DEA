@@ -23,7 +23,7 @@ public class SmsManager : MonoBehaviour
         PropTask.SetActive(false);
 
 
-        //Clone gameObject from PropTask and change name v
+        //Clone gameObject from PropTask and change name 
         GameObject task = Instantiate(PropTask);
         task.name = taskname;
 
@@ -40,10 +40,10 @@ public class SmsManager : MonoBehaviour
         task.SetActive(true);
 
         StartCoroutine(DoSlide(TaskList));
-        StartCoroutine(DoFade(canvGroup, canvGroup.alpha, mFaded ? 1 : 0, task));
+        StartCoroutine(DoFade(canvGroup, canvGroup.alpha, mFaded ? 1 : 0, task,TaskList,deafult));
     }
 
-    public IEnumerator DoFade(CanvasGroup canvGroup, float start, float end, GameObject task){
+    public IEnumerator DoFade(CanvasGroup canvGroup, float start, float end, GameObject task, GameObject panel, GameObject destination){
         yield return new WaitForSecondsRealtime(4);
         float counter = 0f;
 
@@ -56,6 +56,7 @@ public class SmsManager : MonoBehaviour
         }
         TaskList.SetActive(false);
         Destroy(task);
+        panel.GetComponent<RectTransform>().position = destination.transform.position;
         
     }
 

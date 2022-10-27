@@ -16,8 +16,8 @@ public class Coffee : MonoBehaviour
 
     //need for task
     private GameObject task;
-    private int hour = 1; 
-    private int minute = 30;
+    private int hour = 0; 
+    private int minute = 20;
     private string taskname = "Coffee";
     private string tasktitle = "Coffee";
     private string taskdescription = "Make me Depresso without milk and sugar.";
@@ -51,6 +51,7 @@ public class Coffee : MonoBehaviour
 
 
     public void InnitTask(){
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Wiktor [DRIVE]","I Want Depresso without milk and sugar. Tysm ;3 .");
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
@@ -65,12 +66,16 @@ public class Coffee : MonoBehaviour
     }
 
     private void TaskComplete(){
-        Debug.Log("TaskComplete"); // reputation or something else and aojdasiodsadisa
+        Panel.SetActive(false);
+        DisablePlayer();
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Coffee Task Complete","Wiktor: Nawet nie najgorsza, doceniam!");
         DestroyTask();
     }
 
     private void TaskFailed(){
-        Debug.Log("TaskFailed"); // reputation or something else and aojdasiodsadisa
+        Panel.SetActive(false);
+        DisablePlayer();
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Coffee Task Failed","Wiktor: No to cyk, Ocenka leci w dol ;)");
         DestroyTask();   
     }
 

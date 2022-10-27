@@ -49,27 +49,27 @@ public class WeekStateManager : MonoBehaviour{
         switch (newState) {
             case State.Monday:
                 Debug.Log("Monday");
-                MondayHandler();
+                // MondayHandler();
                 break;
                 
             case State.Tuesday:
                 Debug.Log("Tuesday");
-                TuesdayHandler();
+                // TuesdayHandler();
                 break;
 
             case State.Wednesday:
                 Debug.Log("Wednesday");
-                WednesdayHandler();
+                // WednesdayHandler();
                 break;
                 
             case State.Thursday:
                 Debug.Log("Thursday");
-                ThursdayHandler();
+                // ThursdayHandler();
                 break;
         
             case State.Friday:
                 Debug.Log("Friday");
-                FridayHandler();
+                // FridayHandler();
                 break;
         }
 
@@ -93,11 +93,12 @@ public class WeekStateManager : MonoBehaviour{
     //----------------------------------------------------------------
     //MONDAY
     //----------------------------------------------------------------
-    private void MondayHandler(){
-        coding.GetComponent<Coding>().InnitTask();
-    }
-
     private void MondayUpdate(){
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !codingTask_task) {
+            coding.GetComponent<Coding>().InnitTask();
+            codingTask_task = true;
+        }
+
         if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
             coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
@@ -108,11 +109,13 @@ public class WeekStateManager : MonoBehaviour{
     //----------------------------------------------------------------  
     //THUESDAY
     //----------------------------------------------------------------
-    private void TuesdayHandler(){
-        thermostatic.GetComponent<Thermostat>().InnitTask();
-    }
     private void TuesdayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !thermostatic_task) {
+            thermostatic.GetComponent<Thermostat>().InnitTask();
+            thermostatic_task = true;
+        }
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
             coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
@@ -122,11 +125,13 @@ public class WeekStateManager : MonoBehaviour{
     //----------------------------------------------------------------
     //WEDNESDAY
     //----------------------------------------------------------------
-    private void WednesdayHandler(){
-        intercom.GetComponent<Intercom>().InnitTask();
-    }
     private void WednesdayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !intercom_task) {
+            intercom.GetComponent<Intercom>().InnitTask();
+            intercom_task = true;
+        }        
+        
+        if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
             coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
@@ -136,11 +141,13 @@ public class WeekStateManager : MonoBehaviour{
     //----------------------------------------------------------------
     //THURSDAY
     //----------------------------------------------------------------
-    private void ThursdayHandler(){
-        coding.GetComponent<Coding>().InnitTask();
-    }
     private void ThursdayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !codingTask_task) {
+            coding.GetComponent<Coding>().InnitTask();
+            codingTask_task = true;
+        }
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
             coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
@@ -150,11 +157,13 @@ public class WeekStateManager : MonoBehaviour{
     //----------------------------------------------------------------
     //FRIDAY
     //----------------------------------------------------------------
-    private void FridayHandler(){
-        coding.GetComponent<Coding>().InnitTask();
-    }
     private void FridayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
+        if(InGameTime.hour == 8 && InGameTime.minute == 5 && !codingTask_task) {
+            coding.GetComponent<Coding>().InnitTask();
+            codingTask_task = true;
+        }
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
             coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }

@@ -16,8 +16,8 @@ public class Thermostat : MonoBehaviour
 
     //need for task
     private GameObject task;
-    private int hour = 1; 
-    private int minute = 30;
+    private int hour = 0; 
+    private int minute = 5;
     private string taskname = "Thermostatic";
     private string tasktitle = "Thermostat";
     private string taskdescription = "Change tempeture in my room to 40*C ASAP! IM FREEZING";
@@ -52,6 +52,7 @@ public class Thermostat : MonoBehaviour
 
 
     public void InnitTask(){
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Tycjan [DEA]","Troche tu zimno kolego. Zajmij sie tym.");
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
@@ -66,12 +67,16 @@ public class Thermostat : MonoBehaviour
     }
 
     private void TaskComplete(){
-        Debug.Log("TaskComplete"); // reputation or something else and aojdasiodsadisa
+        ThermoPanel.SetActive(false);
+        DisablePlayer();
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Intercom Task Complete","Tycjan: Dzięki, Od razu lepiej.");
         DestroyTask();
     }
 
     private void TaskFailed(){
-        Debug.Log("TaskFailed"); // reputation or something else and aojdasiodsadisa
+        ThermoPanel.SetActive(false);
+        DisablePlayer();
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Thermostat Task Failed","Tycjan: Kolego! nadal tu pizdzi jak cos. Ale juz nvmd");
         DestroyTask();   
     }
 

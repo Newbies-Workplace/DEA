@@ -15,11 +15,11 @@ public class Coding : MonoBehaviour
 
     //need for task
     private GameObject task;
-    private int hour = 1; 
+    private int hour = 0; 
     private int minute = 5;
     private string taskname = "Coding";
-    private string tasktitle = "Coding";
-    private string taskdescription = "Go to ur Desk and do MAGIC bruh!";
+    private string tasktitle = "Coding Task";
+    private string taskdescription = "Go to the computer in your room and write a feature";
 
     //task check variables
     public bool TimesUp = false;
@@ -28,6 +28,7 @@ public class Coding : MonoBehaviour
 
 
     public void InnitTask(){
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Oskar [DEA]","Remember about feature which you told you're gonna finish this week.");
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         if(task != null){
