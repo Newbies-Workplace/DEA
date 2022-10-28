@@ -83,6 +83,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: d17fc909c4d0d084684f889321fc49c6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8cc64d7369e9b2c46b4e2006ade38dfb, type: 2}
     - target: {fileID: 919132149155446097, guid: d17fc909c4d0d084684f889321fc49c6, type: 3}
       propertyPath: m_Name
       value: DrzwiWaskaScianka
@@ -132,19 +136,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.40763497, y: 0.85011005, z: 4.728439}
   m_Center: {x: -0.6017865, y: 4.329761, z: 0.100322485}
---- !u!65 &5895414550272801660
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6245860661867676191}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.40805542, y: 4.749014, z: 1.1125262}
-  m_Center: {x: -0.60199654, y: 2.380309, z: 1.904265}
 --- !u!65 &4401688643662268003
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -158,3 +149,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.40763497, y: 4.749014, z: 1.12846}
   m_Center: {x: -0.6017865, y: 2.380309, z: -1.699667}
+--- !u!65 &5895414550272801660
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245860661867676191}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.40805542, y: 4.749014, z: 1.1125262}
+  m_Center: {x: -0.60199654, y: 2.380309, z: 1.904265}
