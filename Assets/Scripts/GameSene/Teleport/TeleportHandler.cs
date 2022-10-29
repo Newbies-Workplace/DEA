@@ -9,10 +9,10 @@ public class TeleportHandler : MonoBehaviour
     [SerializeField] private GameObject Cinemachine;
     [SerializeField] private GameObject parter;
     [SerializeField] private GameObject pietro;
-    [SerializeField] private static bool isWhere = false; //true == parter , false == pietro
+    [SerializeField] public static bool isWhere = false; //true == parter , false == pietro
 
     void Start(){
-        player = GameObject.Find("ThirdPersonPlayer");
+        player = GameObject.Find("Third Person Player");
     }
 
     private void OnTriggerEnter(Collider other){

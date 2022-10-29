@@ -26,7 +26,7 @@ public class Thermostat : MonoBehaviour
     public bool TimesUp = false;
     public static bool isDone = false;
     public static int TaskGoal = 40;
-    private bool QuestActive;
+    public bool QuestActive;
 
     void Start(){
         leftAngle = Quaternion.Euler(10,30,0);
@@ -42,11 +42,11 @@ public class Thermostat : MonoBehaviour
 
     private void DisablePlayer(){
         if(ThermoPanel.activeSelf){
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = false;
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = false;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = false;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = false;
         }else{
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = true;
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = true;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = true;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = true;
         }
     }
 

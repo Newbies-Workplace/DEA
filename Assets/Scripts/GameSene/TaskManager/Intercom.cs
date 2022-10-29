@@ -43,11 +43,11 @@ public class Intercom : MonoBehaviour
 
     private void DisablePlayer(){
         if(Panel.activeSelf){
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = false;
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = false;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = false;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = false;
         }else{
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = true;
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = true;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = true;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = true;
         }
     }
 

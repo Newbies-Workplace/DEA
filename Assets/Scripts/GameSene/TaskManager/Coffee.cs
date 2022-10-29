@@ -24,8 +24,8 @@ public class Coffee : MonoBehaviour
 
     //task check variables
     public bool TimesUp = false;
-    public static bool isDone = false;
-    private bool QuestActive;
+    public bool isDone = false;
+    public bool QuestActive;
 
     void Start(){
         leftAngle = Quaternion.Euler(20,30,0);
@@ -41,11 +41,11 @@ public class Coffee : MonoBehaviour
 
     private void DisablePlayer(){
         if(Panel.activeSelf){
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = false;
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = false;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = false;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = false;
         }else{
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = true;
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = true;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = true;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = true;
         }
     }
 

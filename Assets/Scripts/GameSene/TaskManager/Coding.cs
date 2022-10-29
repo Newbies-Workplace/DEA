@@ -15,8 +15,8 @@ public class Coding : MonoBehaviour
 
     //need for task
     private GameObject task;
-    private int hour = 0; 
-    private int minute = 5;
+    private int hour = 2; 
+    private int minute = 30;
     private string taskname = "Coding";
     private string tasktitle = "Coding Task";
     private string taskdescription = "Go to the computer in your room and write a feature";
@@ -24,7 +24,7 @@ public class Coding : MonoBehaviour
     //task check variables
     public bool TimesUp = false;
     public bool isDone = false;
-    private bool QuestActive;
+    public bool QuestActive;
 
 
     public void InnitTask(){
@@ -47,8 +47,8 @@ public class Coding : MonoBehaviour
 
     private void TaskComplete(){
         WorkPanel.SetActive(false);
-        GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = true;
-        GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = true;
+        GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = true;
+        GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = true;
         GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Coding Task Complete","We are happy about your contribution into your tasks. We'll have a talk later ;)");
         pc_activities_handler.GetComponent<PcActivitiesHandler>().IsWorkDone = true;
         DestroyTask();
@@ -56,8 +56,8 @@ public class Coding : MonoBehaviour
 
     private void TaskFailed(){
         WorkPanel.SetActive(false);
-        GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = true;
-        GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = true;
+        GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = true;
+        GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = true;
         GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Coding Task Failed","We are concerned about your contribution into your tasks. We'll have a talk later...");
         pc_activities_handler.GetComponent<PcActivitiesHandler>().IsWorkDone = true;
         DestroyTask();   
@@ -71,8 +71,8 @@ public class Coding : MonoBehaviour
     private void AccessComputer(){
         if(isNear(4, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(WorkPanel != null) {
             WorkPanel.SetActive(true);
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move = false;
-            GameObject.Find("Player").transform.Find("ThirdPersonPlayer").GetComponent<ThirdPersonController>().can_move_camera = false;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = false;
+            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = false;
         }
     }
 

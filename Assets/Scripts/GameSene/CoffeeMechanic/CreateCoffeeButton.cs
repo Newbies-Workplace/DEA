@@ -9,6 +9,7 @@ public class CreateCoffeeButton : MonoBehaviour
     [SerializeField] private GameObject sugar;
     [SerializeField] private GameObject requirements;
     [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject CoffeeTask;
 
     private int req_type;
     private bool req_milk;
@@ -25,7 +26,7 @@ public class CreateCoffeeButton : MonoBehaviour
         getRequired();
         if(req_type == requirements.GetComponent<TaskRequire>().Type && req_milk == requirements.GetComponent<TaskRequire>().Milk && req_sugar == requirements.GetComponent<TaskRequire>().Sugar){
             panel.SetActive(false);
-            Coffee.isDone = true;
+            CoffeeTask.GetComponent<Coffee>().isDone = true;
         }
         
     }
