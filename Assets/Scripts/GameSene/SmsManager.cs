@@ -34,7 +34,7 @@ public class SmsManager : MonoBehaviour
         TaskDescription.GetComponent<TMP_Text>().text = taskdescription;
 
         //set Parent to TaskList
-        task.transform.SetParent(TaskList.transform);
+        task.transform.SetParent(TaskList.transform, false);
 
         TaskList.SetActive(true);
         task.SetActive(true);

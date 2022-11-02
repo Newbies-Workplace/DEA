@@ -36,12 +36,16 @@ public class TimeManager : MonoBehaviour
 
     void DayCycleHandler(GameState State){
         
-        if(hour == EndDayValue && minute == 0 && State == GameState.WorkTime){
+        if(hour >= EndDayValue && minute > 0 && State == GameState.WorkTime){
             GameManager.Instance.UpdateGameState(GameState.EndOfDay);
         }
 
-        if(hour == FinalEndDayValue && minute == 0 && State == GameState.EndOfDay){
+        if(hour >= FinalEndDayValue && minute > 0 && State == GameState.EndOfDay){
             GameManager.Instance.UpdateGameState(GameState.DaySummary);
+        }
+
+        if(hour >= FinalEndDayValue && minute > 0 && State == GameState.EndOfDay && StaticClass.Weekday == 5){
+            GameManager.Instance.UpdateGameState(GameState.WeekEnd);
         }
     }
 

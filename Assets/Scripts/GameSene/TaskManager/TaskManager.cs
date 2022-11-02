@@ -30,7 +30,7 @@ public class TaskManager : MonoBehaviour
 
 
         //set Parent to TaskList
-        task.transform.SetParent(TaskList.transform);
+        task.transform.SetParent(TaskList.transform, false);
         task.SetActive(true);
 
         return(task);

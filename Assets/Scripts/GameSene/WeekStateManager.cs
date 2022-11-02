@@ -14,12 +14,16 @@ public class WeekStateManager : MonoBehaviour{
     [SerializeField] private GameObject intercom;
     [SerializeField] private GameObject coffee;
     [SerializeField] private GameObject thermostatic;
+    [SerializeField] private GameObject printer;
+    [SerializeField] private GameObject heater;
 
     //ONLY NEED IN UPDATE METHOD FOR KNOWNING IS ACTIVATED
     private bool codingTask_task = false;
     private bool intercom_task = false;
     private bool coffee_task = false;
     private bool thermostatic_task = false;
+    private bool printer_task = false;
+    private bool heater_task = false;
 
     public State State;
     
@@ -98,6 +102,16 @@ public class WeekStateManager : MonoBehaviour{
             coding.GetComponent<Coding>().InnitTask();
             codingTask_task = true;
         }
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 10 && !printer_task) {
+            printer.GetComponent<Printer>().InnitTask();
+            printer_task = true;
+        }
+
+        // if(InGameTime.hour == 8 && InGameTime.minute == 10 && !heater_task) {
+        //     heater.GetComponent<Heater>().InnitTask();
+        //     heater_task = true;
+        // }
 
         if(InGameTime.hour == 8 && InGameTime.minute == 15 && !coffee_task) {
             coffee.GetComponent<Coffee>().InnitTask();

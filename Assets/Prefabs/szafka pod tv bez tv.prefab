@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1323100077430137046}
   - component: {fileID: 7811308047039510124}
   - component: {fileID: 3820383297103764452}
+  - component: {fileID: 3488999304481737268}
   m_Layer: 0
   m_Name: szafka.002
   m_TagString: Untagged
@@ -98,6 +99,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 3601583183463739705, guid: 4b68f5ce28e0bd14a92714a4355cad67, type: 3}
+--- !u!65 &3488999304481737268
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3471511155514415201}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0039999997, y: 0.0039999997, z: 0.0039999997}
+  m_Center: {x: -2.3801529e-18, y: 0.0022, z: 0.000100000005}
 --- !u!1 &3734632879172210220
 GameObject:
   m_ObjectHideFlags: 0

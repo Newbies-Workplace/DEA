@@ -42,11 +42,13 @@ public class Thermostat : MonoBehaviour
 
     private void DisablePlayer(){
         if(ThermoPanel.activeSelf){
-            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = false;
-            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = false;
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = false;
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = false;
+            ThirdPersonController.isVisibleCursor = true;
         }else{
-            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = true;
-            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = true;
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = true;
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = true;
+            ThirdPersonController.isVisibleCursor = false;
         }
     }
 

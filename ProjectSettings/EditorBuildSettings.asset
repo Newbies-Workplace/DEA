@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DaySummary.unity
     guid: 97efaa8673ea5954896e23ed2a5fc287
+  - enabled: 1
+    path: Assets/Scenes/EndOfWeek.unity
+    guid: 57dcb6767b8b38d40a13a6df0e8b050a
   m_configObjects: {}

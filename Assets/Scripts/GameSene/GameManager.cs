@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour{
         Instance = this;
     }
     
-
-
     void Start(){
         UpdateGameState(GameState.WorkTime);
     }
@@ -38,6 +36,7 @@ public class GameManager : MonoBehaviour{
                 break;
             case GameState.WeekEnd:
                 Debug.Log("WeekEnd");
+                ChangeToEnd();
                 break;
         }
 
@@ -46,6 +45,10 @@ public class GameManager : MonoBehaviour{
 
     private void ChangeToDaySummary(){
         SceneManager.LoadScene("DaySummary");
+    }
+
+    private void ChangeToEnd(){
+        SceneManager.LoadScene("EndOfWeek");
     }
 
     private void ResetTime(){

@@ -39,6 +39,18 @@ public class Coding : MonoBehaviour
 
     }
 
+    private void DisablePlayer(){
+        if(WorkPanel.activeSelf){
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = false;
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = false;
+            ThirdPersonController.isVisibleCursor = true;
+        }else{
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = true;
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = true;
+            ThirdPersonController.isVisibleCursor = false;
+        }
+    }
+
     private void CheckTaskStatus(){
         TimesUp = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().TimesUp;
         if(TimesUp && QuestActive) TaskFailed();
@@ -47,8 +59,7 @@ public class Coding : MonoBehaviour
 
     private void TaskComplete(){
         WorkPanel.SetActive(false);
-        GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = true;
-        GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = true;
+        DisablePlayer();
         GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Coding Task Complete","We are happy about your contribution into your tasks. We'll have a talk later ;)");
         pc_activities_handler.GetComponent<PcActivitiesHandler>().IsWorkDone = true;
         DestroyTask();
@@ -56,8 +67,7 @@ public class Coding : MonoBehaviour
 
     private void TaskFailed(){
         WorkPanel.SetActive(false);
-        GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = true;
-        GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = true;
+        DisablePlayer();
         GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Coding Task Failed","We are concerned about your contribution into your tasks. We'll have a talk later...");
         pc_activities_handler.GetComponent<PcActivitiesHandler>().IsWorkDone = true;
         DestroyTask();   
@@ -71,8 +81,7 @@ public class Coding : MonoBehaviour
     private void AccessComputer(){
         if(isNear(4, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(WorkPanel != null) {
             WorkPanel.SetActive(true);
-            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move = false;
-            GameObject.Find("Player").transform.Find("Third Person Player").GetComponent<ThirdPersonController>().can_move_camera = false;
+            DisablePlayer();
         }
     }
 

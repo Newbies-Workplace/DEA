@@ -8,6 +8,6 @@ using UnityEngine.SceneManagement;
 public class SkipDay : MonoBehaviour
 {
     public void skipday(){
-        SceneManager.LoadScene("DaySummary");
+        InGameTime.hour = 10;
     }
 }

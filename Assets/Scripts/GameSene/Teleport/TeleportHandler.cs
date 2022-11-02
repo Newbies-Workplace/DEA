@@ -12,7 +12,7 @@ public class TeleportHandler : MonoBehaviour
     [SerializeField] public static bool isWhere = false; //true == parter , false == pietro
 
     void Start(){
-        player = GameObject.Find("Third Person Player");
+        player = GameObject.Find("Player");
     }
 
     private void OnTriggerEnter(Collider other){

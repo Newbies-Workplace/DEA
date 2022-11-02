@@ -3,35 +3,75 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class ThirdPersonController : MonoBehaviour{
 
-    public CharacterController controller;
-    public Transform cam;
-    public bool can_move = true;
-    public float speed = 6f;
-    public float gravity = -9f;
+public class ThirdPersonController : MonoBehaviour
+{    
+    [SerializeField] private CharacterController controller;
+    [SerializeField] private GameObject animator;
+    [SerializeField] private AudioSource source;
+    [SerializeField] private bool isWalking = false;
+    [SerializeField] private CinemachineBrain cinemaBrain;
+    private float moveAmount;
+    [SerializeField] private Transform cam;
+    [SerializeField] private float speed = 6f;
     public float turnSmoothTime = 0.1f;
-    public float jumpHeight = 1.5f;
-    
-    public Transform groundCheck;
-    public float groundDistance = 0.2f;
-    public LayerMask groundMask;
-
-    Vector3 velocity;
-    bool isGrounded;
     float turnSmoothVelocity;
+    public bool can_move = true;
+    public float groundDistance = 0.2f;
+    public float gravity = -9f;
+    public float jumpHeight = 1.5f;
+    public LayerMask groundMask;
+    public Transform groundCheck;
     public CinemachineBrain CMBrain;
+    Vector3 velocity;
     public GameObject objectToFind;
     public bool can_move_camera = true;
-    
+    bool isGrounded;
+    [SerializeField] public static bool isVisibleCursor = false; 
 
-    void Update(){
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
 
-        objectToFind = GameObject.FindGameObjectWithTag("MainCamera");
-        CMBrain = objectToFind.GetComponent<CinemachineBrain>();
-        CMBrain.enabled = can_move_camera;
+    private void Update(){
+
+        Cursor.visible = isVisibleCursor;
+
+        cinemaBrain.enabled = can_move_camera;
         if(can_move){
 
+            GravitationAndJump();
+
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            if (animator != null){
+                moveAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
+                animator.GetComponent<AnimatorManager>().UpdateAnimatorValues(0, moveAmount);
+            }
+            if(Mathf.Abs(vertical) + Mathf.Abs(horizontal) > 0 ) {
+                isWalking = true;
+            }else{
+                isWalking = false;
+            }
+            if (isWalking && !source.isPlaying) source.Play();
+            if (!isWalking) source.Stop();
+
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+            if(direction.magnitude >= 0.1f){
+
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                controller.Move(moveDir.normalized * speed * Time.deltaTime);           
+            }
+        }
+    }
+
+    private void GravitationAndJump(){
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
             if(isGrounded && velocity.y < 0){
@@ -45,22 +85,5 @@ public class ThirdPersonController : MonoBehaviour{
             velocity.y += gravity * Time.deltaTime;
 
             controller.Move(velocity * Time.deltaTime);
-
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-            if(direction.magnitude >= 0.1f){
-
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                controller.Move(moveDir.normalized * speed * Time.deltaTime);           
-            }
-
-
-        }
     }
 }

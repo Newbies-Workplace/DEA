@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5859d8a17b65c61488b7c0ecb42c2e26
+guid: b1ee006cf07f34f4c8efd548d35f0cb4
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
@@ -18,17 +18,14 @@ ModelImporter:
   - first:
       74: -2343390804075553682
     second: Postac.001|Working
-  - first:
-      74: -6276648128456093648
-    second: Postac.001|Walk (1)
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material
-    second: {fileID: 2100000, guid: 580d2cbe0ce5ba445a564b2c3be97199, type: 2}
+    second: {fileID: 2100000, guid: 1f5b674f37fd6174180f1e3014f12a91, type: 2}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -125,7 +122,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -154,7 +151,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -183,7 +180,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -214,7 +211,7 @@ ModelImporter:
     importLights: 1
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
-    swapUVChannels: 0
+    swapUVChannels: 1
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
