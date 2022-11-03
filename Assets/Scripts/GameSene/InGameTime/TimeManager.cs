@@ -8,7 +8,7 @@ public class TimeManager : MonoBehaviour
     public static int day_start_hour = 8;
     bool checkTime = false;
     public int EndDayValue = 9;
-    public int FinalEndDayValue = 10;
+    public int FinalEndDayValue = 13;
     GameState State;
  
 

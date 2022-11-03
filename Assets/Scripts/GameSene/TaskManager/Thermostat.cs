@@ -7,17 +7,19 @@ public class Thermostat : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject heart;
     [SerializeField] private GameObject ThermoPanel;
+    [SerializeField] private GameObject indicator;
+    [SerializeField] private bool indicator_ison = false;
 
-    public float range = 2;
-    int max_dist = 2;
+    public float range = 4;
+    int max_dist = 4;
     Quaternion rightAngle;
     Quaternion leftAngle;
     Quaternion centerAngle;
 
     //need for task
     private GameObject task;
-    private int hour = 0; 
-    private int minute = 5;
+    private int hour = 1; 
+    private int minute = 35;
     private string taskname = "Thermostatic";
     private string tasktitle = "Thermostat";
     private string taskdescription = "Change tempeture in my room to 40*C ASAP! IM FREEZING";
@@ -71,7 +73,7 @@ public class Thermostat : MonoBehaviour
     private void TaskComplete(){
         ThermoPanel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Intercom Task Complete","Tycjan: Dzięki, Od razu lepiej.");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Intercom Task Complete","Tycjan: Dzieki, Od razu lepiej.");
         DestroyTask();
     }
 
@@ -89,7 +91,7 @@ public class Thermostat : MonoBehaviour
 
     private void AccessObject(){
         DisablePlayer();
-        if(isNear(2, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(ThermoPanel != null) ThermoPanel.SetActive(true);
+        if(isNear(4, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(ThermoPanel != null) ThermoPanel.SetActive(true);
     }
 
 
@@ -97,6 +99,7 @@ public class Thermostat : MonoBehaviour
     {
         if(QuestActive) CheckTaskStatus();
     
+        indicator_ison = false;
         Vector3 forward = centerAngle*Vector3.forward;
         Vector3 left = leftAngle*Vector3.forward;
         Vector3 right = rightAngle*Vector3.forward;
@@ -113,29 +116,35 @@ public class Thermostat : MonoBehaviour
             {
                 if(QuestActive) AccessObject();
                 DisablePlayer();
+                indicator_ison = true;
                 // if(!isDone) AccessObject();
             }
         }
 
-            if (Physics.Raycast(RayLeft, out hit, range))
+        if (Physics.Raycast(RayLeft, out hit, range))
         {
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
                 DisablePlayer();
+                indicator_ison = true;
                 // if(!isDone) AccessObject();
             }
         }
 
-            if (Physics.Raycast(RayRight, out hit, range))
+        if (Physics.Raycast(RayRight, out hit, range))
         {
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
                 DisablePlayer();
+                indicator_ison = true;
                 // if(!isDone) AccessObject();
             }
         }
+        if(QuestActive) indicator.SetActive(indicator_ison);
+        if(!QuestActive) indicator.SetActive(false);
+        if(QuestActive && ThermoPanel.activeSelf == true) indicator.SetActive(false);
 
     }
 }

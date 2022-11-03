@@ -12,17 +12,9 @@ public class IndicatorHandler : MonoBehaviour
     [SerializeField] private GameObject Thermostat;
 
     [SerializeField] private GameObject ListScript; 
-    [SerializeField] public GameObject CurrentTask; 
+    [SerializeField] public GameObject CurrentTask = null; 
     [SerializeField] public int TaskCount; 
-    [SerializeField] public int CurrentCount; 
-
-
-    
-    void Start(){
-        CurrentCount = 0;
-        CurrentTask = null;
-    }
-
+    [SerializeField] public int CurrentCount = 0; 
 
     void Update()
     {

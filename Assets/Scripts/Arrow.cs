@@ -9,13 +9,12 @@ public class Arrow : MonoBehaviour
     [SerializeField] public GameObject Arrow1;
     [SerializeField] public GameObject StairsUp;
     [SerializeField] public GameObject StairsDown;
-    [SerializeField] public List<GameObject> Up;
-    [SerializeField] public List<GameObject> Down;
 
     [SerializeField] private GameObject task_object_coding; //up
     [SerializeField] private GameObject task_object_thermostat; // up
     [SerializeField] private GameObject task_object_coffee; // down
     [SerializeField] private GameObject task_object_intercom; //up
+    [SerializeField] private GameObject task_object_printer; //up
 
     [SerializeField] private  bool ActualFloor; //true == parter , false == pietro
     [SerializeField] private  bool checkup; //true == parter , false == pietro
@@ -60,9 +59,12 @@ public class Arrow : MonoBehaviour
             floor = true;
             break;
         case "Intercom":
-            floor = false;
+            floor = true;
             break;
         case "Thermostat":
+            floor = true;
+            break;
+        case "Printer":
             floor = false;
             break;
         }

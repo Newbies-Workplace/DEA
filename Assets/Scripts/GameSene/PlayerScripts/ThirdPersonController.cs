@@ -27,6 +27,8 @@ public class ThirdPersonController : MonoBehaviour
     public GameObject objectToFind;
     public bool can_move_camera = true;
     bool isGrounded;
+    float horizontal = 0;
+    float vertical = 0;
     [SerializeField] public static bool isVisibleCursor = false; 
 
     private void Start()
@@ -43,8 +45,8 @@ public class ThirdPersonController : MonoBehaviour
 
             GravitationAndJump();
 
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
+            horizontal = Input.GetAxisRaw("Horizontal");
+            vertical = Input.GetAxisRaw("Vertical");
             if (animator != null){
                 moveAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
                 animator.GetComponent<AnimatorManager>().UpdateAnimatorValues(0, moveAmount);

@@ -61,6 +61,7 @@ public class Heater : MonoBehaviour
 
     private void TaskFailed(){
         GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFaile","Printer Task Failed","Oskar: Wiecej sily kolego. Pokazac ci jak sie to robi?");
+        StaticClass.Grade--;
         DestroyTask();   
     }
 

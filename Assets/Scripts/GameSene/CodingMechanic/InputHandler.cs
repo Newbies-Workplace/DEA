@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 public class InputHandler : MonoBehaviour
 {
-    private string Password = "SayMyName";
+    private string Password = "ubuntu123";
     public GameObject IdeWindowInside;
     public GameObject ThisWindow;
     [SerializeField] private TMP_InputField PasswordInput; 

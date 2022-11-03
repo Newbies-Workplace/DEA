@@ -7,6 +7,8 @@ public class Coffee : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject heart;
     [SerializeField] private GameObject Panel;
+    [SerializeField] private GameObject indicator;
+    [SerializeField] private bool indicator_ison = false;
 
     public float range = 2;
     int max_dist = 2;
@@ -16,16 +18,16 @@ public class Coffee : MonoBehaviour
 
     //need for task
     private GameObject task;
-    private int hour = 0; 
-    private int minute = 20;
+    private int hour = 1; 
+    private int minute = 15;
     private string taskname = "Coffee";
     private string tasktitle = "Coffee";
-    private string taskdescription = "Make me Depresso without milk and sugar.";
 
     //task check variables
     public bool TimesUp = false;
     public bool isDone = false;
     public bool QuestActive;
+    public static int num;
 
     void Start(){
         leftAngle = Quaternion.Euler(20,30,0);
@@ -53,9 +55,10 @@ public class Coffee : MonoBehaviour
 
 
     public void InnitTask(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Wiktor [DRIVE]","I Want Depresso without milk and sugar. Tysm ;3 .");
+        num = Random.Range(0,4);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit",CoffeeLines.textName[num],CoffeeLines.textInit[num]);
         QuestActive = true;
-        task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
+        task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,CoffeeLines.textDescription[num]);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
@@ -70,14 +73,15 @@ public class Coffee : MonoBehaviour
     private void TaskComplete(){
         Panel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Coffee Task Complete","Wiktor: Nawet nie najgorsza, doceniam!");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Coffee Task Complete",CoffeeLines.textWon[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
         Panel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Coffee Task Failed","Wiktor: No to cyk, Ocenka leci w dol ;)");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Coffee Task Failed",CoffeeLines.textLost[num]);
+        StaticClass.Grade--;
         DestroyTask();   
     }
 
@@ -94,6 +98,7 @@ public class Coffee : MonoBehaviour
 
     void Update()
     {
+        indicator_ison = false;
 
         Vector3 forward = centerAngle*Vector3.forward;
         Vector3 left = leftAngle*Vector3.forward;
@@ -111,6 +116,7 @@ public class Coffee : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             { 
                 if(QuestActive) AccessObject();
+                indicator_ison = true;
             }
         }
 
@@ -119,6 +125,7 @@ public class Coffee : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                indicator_ison = true;
             }
         }
 
@@ -127,8 +134,12 @@ public class Coffee : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                indicator_ison = true;
             }
         }
         if(QuestActive) CheckTaskStatus();
+        if(QuestActive) indicator.SetActive(indicator_ison);
+        if(!QuestActive) indicator.SetActive(false);
+        if(QuestActive && Panel.activeSelf == true) indicator.SetActive(false);
     }
 }

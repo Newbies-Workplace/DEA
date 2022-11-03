@@ -15,6 +15,9 @@ public class CreateCoffeeButton : MonoBehaviour
     private bool req_milk;
     private int req_sugar;
 
+    void Start(){
+        
+    }
 
     void getRequired(){
         req_type = type.GetComponent<ChoiceHandler>().ChoiceValue;

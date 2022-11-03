@@ -7,6 +7,8 @@ public class Printer : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject heart;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject indicator;
+    [SerializeField] private bool indicator_ison = false;
 
     public float range = 3;
     int max_dist = 3;
@@ -17,10 +19,10 @@ public class Printer : MonoBehaviour
 
     private GameObject task;
     private int hour = 1; 
-    private int minute = 5;
+    private int minute = 30;
     private string taskname = "Printer";
     private string tasktitle = "Printer";
-    private string taskdescription = "Idz napraw drukarke!";
+    private string taskdescription = "Zerknij do drukarki i sprobuj cos naprawic!";
 
     public bool TimesUp = false;
     public bool isDone = false;
@@ -28,8 +30,8 @@ public class Printer : MonoBehaviour
 
     void Start()
     {
-        leftAngle = Quaternion.Euler(10,30,0);
-        rightAngle = Quaternion.Euler(10,-30,0);
+        leftAngle = Quaternion.Euler(10,-30,0);
+        rightAngle = Quaternion.Euler(10,30,0);
         centerAngle = Quaternion.Euler(10,0,0);
     }
 
@@ -40,7 +42,7 @@ public class Printer : MonoBehaviour
     }
 
     public void InnitTask(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Oskar [DEA]","Skocz naprawic drukarke.");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Oskar [DEA]","Luknij do drukarki. Szybciutko!.");
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
@@ -55,12 +57,13 @@ public class Printer : MonoBehaviour
     }
 
     private void TaskComplete(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Printer Task Complete","Oskar: Dobrze przypierdolic czasem tez trzeba XD");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Printer Task Complete","Oskar: Dobrze uderzyc czasem tez trzeba XD");
         DestroyTask();
     }
 
     private void TaskFailed(){
         GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFaile","Printer Task Failed","Oskar: Wiecej sily kolego. Pokazac ci jak sie to robi?");
+        StaticClass.Grade--;
         DestroyTask();   
     }
 
@@ -74,12 +77,15 @@ public class Printer : MonoBehaviour
         if(isNear(4,player,heart)){
             if( Input.GetKeyDown(KeyCode.E)){
                 animator.SetTrigger("Printer");
+                StartCoroutine(EndTask());
             }
         }
     }
 
     void Update()
     {
+        indicator_ison = false;
+
         if(QuestActive) CheckTaskStatus();
 
         Vector3 forward = centerAngle*Vector3.forward;
@@ -97,6 +103,7 @@ public class Printer : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                indicator_ison = true;
             }
         }
 
@@ -105,6 +112,7 @@ public class Printer : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                indicator_ison = true;
             }
         }
 
@@ -113,9 +121,19 @@ public class Printer : MonoBehaviour
             if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
             {
                 if(QuestActive) AccessObject();
+                indicator_ison = true;
             }
         }
+        if(QuestActive) indicator.SetActive(indicator_ison);
+        if(!QuestActive) indicator.SetActive(false);
 
+    }
+
+
+    public IEnumerator EndTask(){
+        yield return new WaitForSecondsRealtime(2);
+        isDone = true;
+        
     }
 
 }

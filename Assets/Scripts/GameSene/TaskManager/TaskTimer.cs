@@ -19,7 +19,7 @@ public class TaskTimer : MonoBehaviour{
     void Update(){
         if(isRunning){
             if(timeRemaining > 0 ){
-                timeRemaining -= Time.deltaTime * 30;
+                timeRemaining -= Time.deltaTime * 120;
                 DisplayTime(timeRemaining);
             }else if (timeRemaining < 0){
                 TimesUp = true;

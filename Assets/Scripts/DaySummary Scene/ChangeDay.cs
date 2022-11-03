@@ -6,9 +6,14 @@ using UnityEngine.SceneManagement;
 public class ChangeDay : MonoBehaviour
 {
     public void NextDay(){
-        StaticClass.Weekday++;
-        SceneManager.LoadScene("Game");
-        InGameTime.day++;
+        if(StaticClass.Grade <= 1){
+            SceneManager.LoadScene("EndOfWeek");
+        }else{
+            StaticClass.Weekday++;
+            SceneManager.LoadScene("Game");
+            InGameTime.day++;
+        }
+
     }
 }
 

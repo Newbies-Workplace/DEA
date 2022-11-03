@@ -12,23 +12,27 @@ public class Coding : MonoBehaviour
     public GameObject TodoPanel;
     [SerializeField] private CanvasGroup canvGroup;
     [SerializeField] private GameObject pc_activities_handler;
+    [SerializeField] private GameObject indicator;
+    [SerializeField] private bool indicator_ison = false;
 
     //need for task
     private GameObject task;
-    private int hour = 2; 
+    private int hour = 5; 
     private int minute = 30;
     private string taskname = "Coding";
     private string tasktitle = "Coding Task";
-    private string taskdescription = "Go to the computer in your room and write a feature";
+    private string taskdescription = "Idz do swojego komputera i zacznij prace";
 
     //task check variables
     public bool TimesUp = false;
     public bool isDone = false;
     public bool QuestActive;
+    private int num;
 
 
     public void InnitTask(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Oskar [DEA]","Remember about feature which you told you're gonna finish this week.");
+        num = Random.Range(0,3);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit",CodingLines.textName[num],CodingLines.textInit[num]);
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         if(task != null){
@@ -60,7 +64,7 @@ public class Coding : MonoBehaviour
     private void TaskComplete(){
         WorkPanel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Coding Task Complete","We are happy about your contribution into your tasks. We'll have a talk later ;)");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Coding Task Complete",CodingLines.textWon[num]);
         pc_activities_handler.GetComponent<PcActivitiesHandler>().IsWorkDone = true;
         DestroyTask();
     } 
@@ -68,8 +72,9 @@ public class Coding : MonoBehaviour
     private void TaskFailed(){
         WorkPanel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Coding Task Failed","We are concerned about your contribution into your tasks. We'll have a talk later...");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Coding Task Failed",CodingLines.textLost[num]);
         pc_activities_handler.GetComponent<PcActivitiesHandler>().IsWorkDone = true;
+        StaticClass.Grade--;
         DestroyTask();   
     }
 
@@ -79,9 +84,12 @@ public class Coding : MonoBehaviour
     }
 
     private void AccessComputer(){
-        if(isNear(4, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(WorkPanel != null) {
-            WorkPanel.SetActive(true);
-            DisablePlayer();
+        if(isNear(4, player, heart)){
+            indicator_ison = true;
+            if (Input.GetKeyDown(KeyCode.E)) if(WorkPanel != null) {
+                WorkPanel.SetActive(true);
+                DisablePlayer();
+            }
         }
     }
 
@@ -99,11 +107,15 @@ public class Coding : MonoBehaviour
 
     void Update()
     {
+        indicator_ison = false;
         PanelCheckout();
         if(QuestActive){
             CheckTaskStatus();
             AccessComputer();
         }
+        if(QuestActive) indicator.SetActive(indicator_ison);
+        if(!QuestActive) indicator.SetActive(false);
+        if(QuestActive && WorkPanel.activeSelf == true) indicator.SetActive(false);
         
     }
 }

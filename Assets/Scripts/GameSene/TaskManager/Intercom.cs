@@ -8,6 +8,9 @@ public class Intercom : MonoBehaviour
     [SerializeField] private GameObject heart;
     [SerializeField] private GameObject Panel;
 
+    [SerializeField] private GameObject indicator;
+    [SerializeField] private bool indicator_ison = false;
+
     public float range = 3;
     int max_dist = 3;
 
@@ -18,7 +21,7 @@ public class Intercom : MonoBehaviour
     //need for task
     private GameObject task;
     private int hour = 0; 
-    private int minute = 5;
+    private int minute = 50;
     private string taskname = "Intercom";
     private string tasktitle = "Intercom";
     private string taskdescription = "Go to the intercom and decide about opening doors";
@@ -80,6 +83,7 @@ public class Intercom : MonoBehaviour
         Panel.SetActive(false);
         DisablePlayer();
         GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFaile","Intercom Task Failed","Wojtek: Masz awizo i teraz sam na rowerze jedz po paczke.");
+        StaticClass.Grade--;
         DestroyTask();   
     }
 
@@ -94,6 +98,7 @@ public class Intercom : MonoBehaviour
 
     void Update()
     {
+        indicator_ison = false;
         if(QuestActive) CheckTaskStatus();
 
         Vector3 forward = centerAngle*Vector3.forward;
@@ -112,6 +117,7 @@ public class Intercom : MonoBehaviour
             {
                 if(QuestActive) AccessObject();
                 DisablePlayer();
+                indicator_ison = true;
                 // if(!isDone) AccessObject();
             }
         }
@@ -122,6 +128,7 @@ public class Intercom : MonoBehaviour
             {
                 if(QuestActive) AccessObject();
                 DisablePlayer();
+                indicator_ison = true;
                 // if(!isDone) AccessObject();
             }
         }
@@ -132,9 +139,13 @@ public class Intercom : MonoBehaviour
             {
                 if(QuestActive) AccessObject();
                 DisablePlayer();
+                indicator_ison = true;
                 // if(!isDone) AccessObject();
             }
         }
+        if(QuestActive) indicator.SetActive(indicator_ison);
+        if(!QuestActive) indicator.SetActive(false);
+        if(QuestActive && Panel.activeSelf == true) indicator.SetActive(false);
 
     }
 }

@@ -9,10 +9,10 @@ public class TaskRequire : MonoBehaviour
     public int Type;
     public bool Milk;
 
-    void Start(){
-        Sugar = 0;
-        Type = 1;
-        Milk = false;
+    void Update(){
+        Sugar = CoffeeLines.taskSugar[Coffee.num];
+        Type = CoffeeLines.taskType[Coffee.num];
+        Milk = CoffeeLines.taskMilk[Coffee.num];
         //more later 
         //changed when calling task from statemachine
     } 

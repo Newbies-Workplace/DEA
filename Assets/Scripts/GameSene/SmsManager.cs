@@ -69,7 +69,9 @@ public class SmsManager : MonoBehaviour
         while(counter < Duration)
         {
             counter += Time.deltaTime;
-            panel.GetComponent<RectTransform>().position = Vector3.Lerp(panel.GetComponent<RectTransform>().position, destination.transform.position, Time.deltaTime * smoothFactor);
+            if(panel.GetComponent<RectTransform>().position != destination.transform.position){
+                panel.GetComponent<RectTransform>().position = Vector3.Lerp(panel.GetComponent<RectTransform>().position, destination.GetComponent<RectTransform>().position, Time.deltaTime * smoothFactor);
+            }
             
             yield return null; 
         }

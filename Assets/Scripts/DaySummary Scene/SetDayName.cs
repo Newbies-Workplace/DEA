@@ -9,12 +9,17 @@ public class SetDayName : MonoBehaviour
 
     void Start()
     {
-        int value = StaticClass.Weekday;
-        if (value == 1) title.text = "End of the Monday";
-        if (value == 2) title.text = "End of the Tuesday";
-        if (value == 3) title.text = "End of the Wednesday";
-        if (value == 4) title.text = "End of the Thursday";
-        if (value == 5) title.text = "End of the Friday"; 
+        if(StaticClass.Grade <= 1){
+            title.text = "Przegrales praktykancie! :c";
+        }else{
+            int value = StaticClass.Weekday;
+            if (value == 1) title.text = "End of the Monday";
+            if (value == 2) title.text = "End of the Tuesday";
+            if (value == 3) title.text = "End of the Wednesday";
+            if (value == 4) title.text = "End of the Thursday";
+            if (value == 5) title.text = "End of the Friday"; 
+        }
+
     }
 }
 
