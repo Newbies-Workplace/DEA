@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Intercom : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Intercom : MonoBehaviour
     [SerializeField] private GameObject heart;
     [SerializeField] private GameObject Panel;
 
+    [SerializeField] private TMP_Text title;
     [SerializeField] private GameObject indicator;
     [SerializeField] private bool indicator_ison = false;
 
@@ -24,12 +26,12 @@ public class Intercom : MonoBehaviour
     private int minute = 50;
     private string taskname = "Intercom";
     private string tasktitle = "Intercom";
-    private string taskdescription = "Go to the intercom and decide about opening doors";
 
     //task check variables
     public bool TimesUp = false;
     public bool isDone = false;
     public bool QuestActive = false;
+    private int num;
 
     void Start()
     {
@@ -57,9 +59,11 @@ public class Intercom : MonoBehaviour
     }
 
     public void InnitTask(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Wojtek [DEA]","When the courier arrives, open the door for him.");
+        num = Random.Range(0,2);
+        title.text = InterLines.taskWho[num];
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit",InterLines.textName[num],InterLines.textInit[num]);
         QuestActive = true;
-        task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
+        task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,InterLines.textDescription[num]);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
@@ -75,14 +79,14 @@ public class Intercom : MonoBehaviour
     private void TaskComplete(){
         Panel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Intercom Task Complete","Wojtek: Dzieki, jakos mi sie nie chcialo wstawac XD");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Intercom Task Complete",InterLines.textWon[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
         Panel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFaile","Intercom Task Failed","Wojtek: Masz awizo i teraz sam na rowerze jedz po paczke.");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFaile","Intercom Task Failed",InterLines.textLost[num]);
         StaticClass.Grade--;
         DestroyTask();   
     }

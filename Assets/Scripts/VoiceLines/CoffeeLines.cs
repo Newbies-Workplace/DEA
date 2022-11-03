@@ -14,8 +14,8 @@ public static class CoffeeLines
 
     public static List<string> textInit = new List<string> {
         "Dobra praktykancie. Jedna srednia, Migiem do mojego pokoju.",
-        "kapuczina z dodatkowym mlekiem z trzema lyzkami cukru sama się nie zrobi...",
-        "Jak kawa to czarna jak noc i gorzka jak zycie. Chyba wiesz co z tą informacja zrobic.",
+        "kapuczina z dodatkowym mlekiem z trzema lyzkami cukru sama sie nie zrobi...",
+        "Jak kawa to czarna jak noc i gorzka jak zycie. Chyba wiesz co z ta informacja zrobic.",
         "Syszalem, ze robisz dobre cappuccino... Chetnie sprobuje.",
         "Chce Depresso. Ten kod juz zniecheca do zycia",
     };

@@ -22,15 +22,16 @@ public class Thermostat : MonoBehaviour
     private int minute = 35;
     private string taskname = "Thermostatic";
     private string tasktitle = "Thermostat";
-    private string taskdescription = "Change tempeture in my room to 40*C ASAP! IM FREEZING";
 
     //task check variables
     public bool TimesUp = false;
     public static bool isDone = false;
-    public static int TaskGoal = 40;
+    public static int TaskGoal = 30;
     public bool QuestActive;
+    private int num;
 
     void Start(){
+        ThermoHandler.ThermoStatValue = 21;
         leftAngle = Quaternion.Euler(10,30,0);
         rightAngle = Quaternion.Euler(10,-30,0);
         centerAngle = Quaternion.Euler(10,0,0);
@@ -56,9 +57,11 @@ public class Thermostat : MonoBehaviour
 
 
     public void InnitTask(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Tycjan [DEA]","Troche tu zimno kolego. Zajmij sie tym.");
+        num = Random.Range(0,3);
+        TaskGoal = ThermoLines.taskTemp[num];
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit",ThermoLines.textName[num],ThermoLines.textInit[num]);
         QuestActive = true;
-        task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
+        task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,ThermoLines.textDescription[num]);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
@@ -73,14 +76,14 @@ public class Thermostat : MonoBehaviour
     private void TaskComplete(){
         ThermoPanel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Intercom Task Complete","Tycjan: Dzieki, Od razu lepiej.");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Intercom Task Complete",ThermoLines.textWon[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
         ThermoPanel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Thermostat Task Failed","Tycjan: Kolego! nadal tu pizdzi jak cos. Ale juz nvmd");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Thermostat Task Failed",ThermoLines.textLost[num]);
         DestroyTask();   
     }
 

@@ -47,7 +47,7 @@ public class SmsManager : MonoBehaviour
     }
 
     public IEnumerator DoFade(CanvasGroup canvGroup, float start, float end, GameObject task, GameObject panel, GameObject destination){
-        yield return new WaitForSecondsRealtime(4);
+        yield return new WaitForSecondsRealtime(5);
         float counter = 0f;
 
         while(counter < Duration)

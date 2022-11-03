@@ -108,6 +108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 295413679470340553}
+  - component: {fileID: 3589184419499852440}
   m_Layer: 0
   m_Name: smietnik (1)
   m_TagString: Untagged
@@ -220,3 +221,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3b8cf4bc873f7e4bacadcd2c57c6263, type: 3}
+--- !u!65 &3589184419499852440
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044348906225045796}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.1821499, z: 1}
+  m_Center: {x: 0, y: 0.55579615, z: 0}
