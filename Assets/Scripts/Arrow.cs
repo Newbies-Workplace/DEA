@@ -7,7 +7,6 @@ public class Arrow : MonoBehaviour
     private Transform target;
     [SerializeField] public GameObject IndicatorHandler;
     [SerializeField] public GameObject Arrow1;
-    [SerializeField] public GameObject Arrow2;
     [SerializeField] public GameObject StairsUp;
     [SerializeField] public GameObject StairsDown;
     [SerializeField] public List<GameObject> Up;
@@ -34,10 +33,8 @@ public class Arrow : MonoBehaviour
         target = IndicatorHandler.GetComponent<IndicatorHandler>().CurrentTask.transform;
         if(target.name == "No Task"){
             Arrow1.GetComponent<MeshRenderer>().enabled = false;
-            Arrow2.GetComponent<MeshRenderer>().enabled = false;
         }else{
             Arrow1.GetComponent<MeshRenderer>().enabled = true;
-            Arrow2.GetComponent<MeshRenderer>().enabled = true;
         }
         Transform holder = target;
         if(CheckFloor(target.name) == ActualFloor){

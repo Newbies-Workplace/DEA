@@ -95,14 +95,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7337453432934483231, guid: 7aab1791d61782f428c607482a365851, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.465
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7aab1791d61782f428c607482a365851, type: 3}
       propertyPath: m_Name
       value: biurko_low_poly
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7aab1791d61782f428c607482a365851, type: 3}
+--- !u!1 &3095684956411896648 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2093304170256535564, guid: 7aab1791d61782f428c607482a365851, type: 3}
+  m_PrefabInstance: {fileID: 4033813620458500932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5088510025563020956
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095684956411896648}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.020000005, y: 0.02, z: 0.019999998}
+  m_Center: {x: 0.00000023841858, y: -0.000000014901161, z: 0.000000007450581}
 --- !u!4 &3490365993575961775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7aab1791d61782f428c607482a365851, type: 3}
   m_PrefabInstance: {fileID: 4033813620458500932}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4268169776435727893 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7aab1791d61782f428c607482a365851, type: 3}
+  m_PrefabInstance: {fileID: 4033813620458500932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7530670151580901740
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268169776435727893}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

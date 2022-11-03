@@ -7,8 +7,10 @@ using TMPro;
 public class SmsManager : MonoBehaviour
 {
     [SerializeField]private GameObject TaskList;
-    [SerializeField] private CanvasGroup canvGroup;
+    [SerializeField]private CanvasGroup canvGroup;
     [SerializeField]private GameObject PropTask;
+    [SerializeField]private AudioSource sms_audio;
+    [SerializeField]private AudioClip sound;
 
     private bool mFaded = false;
     float smoothFactor = 1.0f;
@@ -40,6 +42,7 @@ public class SmsManager : MonoBehaviour
         task.SetActive(true);
 
         StartCoroutine(DoSlide(TaskList));
+        sms_audio.PlayOneShot(sound);
         StartCoroutine(DoFade(canvGroup, canvGroup.alpha, mFaded ? 1 : 0, task,TaskList,deafult));
     }
 
