@@ -22,12 +22,12 @@ public class IndicatorHandler : MonoBehaviour
         if(CurrentCount > TaskCount) CurrentCount = 0;
 
         if(!Coding.activeSelf && !Coffee.activeSelf && !Intercom.activeSelf && !Thermostat.activeSelf){
-            if (Input.GetKeyDown(KeyCode.Z)){ // -
+            if (Input.GetKeyDown(KeyCode.Comma)){ // -
                 if(CurrentCount > 0 ){
                     CurrentCount--;
                 }
             }
-            if (Input.GetKeyDown(KeyCode.X)){ // +
+            if (Input.GetKeyDown(KeyCode.Period)){ // +
                 if(CurrentCount < TaskCount-1 ){
                     CurrentCount++;
                 }
