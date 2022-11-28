@@ -40,7 +40,7 @@ public class Heater : MonoBehaviour
     }
 
     public void InnitTask(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit","Oskar [DEA]","Idz wylacz farelke.");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("Taskinnit","Oskar [DEA]","Idz wylacz farelke.");
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
@@ -55,12 +55,12 @@ public class Heater : MonoBehaviour
     }
 
     private void TaskComplete(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Printer Task Complete","Oskar: Dobrze przypierdolic czasem tez trzeba XD");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskComplete","Printer Task Complete","Oskar: Dobrze przypierdolic czasem tez trzeba XD");
         DestroyTask();
     }
 
     private void TaskFailed(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFaile","Printer Task Failed","Oskar: Wiecej sily kolego. Pokazac ci jak sie to robi?");
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskFaile","Printer Task Failed","Oskar: Wiecej sily kolego. Pokazac ci jak sie to robi?");
         StaticClass.Grade--;
         DestroyTask();   
     }

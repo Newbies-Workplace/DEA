@@ -17,9 +17,18 @@ public class SmsManager : MonoBehaviour
     private float Duration = 0.3f;
     [SerializeField] GameObject destination;
     [SerializeField] GameObject deafult;
+
+    //TaskQueue 
+    private bool WorkInProgress = false;
+    private List<string> TaskName = new List<string>();
+    private List<string> TaskTitle = new List<string>();
+    private List<string> TaskDescription = new List<string>();
+
     
-    public void CreateSMS(string taskname, string tasktitle, string taskdescription){
-        
+    private void CreateSMS(string taskname, string tasktitle, string taskdescription){
+        WorkInProgress = true;
+
+
         //in case of warious things like my Alzheimer
         canvGroup.alpha = 1;
         PropTask.SetActive(false);
@@ -46,7 +55,25 @@ public class SmsManager : MonoBehaviour
         StartCoroutine(DoFade(canvGroup, canvGroup.alpha, mFaded ? 1 : 0, task,TaskList,deafult));
     }
 
-    public IEnumerator DoFade(CanvasGroup canvGroup, float start, float end, GameObject task, GameObject panel, GameObject destination){
+    //Add task to queque
+    public void TaskQueue(string taskname, string tasktitle, string taskdescription){
+        TaskName.Add(taskname);
+        TaskTitle.Add(tasktitle);
+        TaskDescription.Add(taskdescription);
+    }
+    
+    //if can, then do task from queque
+    void Update(){
+        if(!WorkInProgress && TaskName.Count != 0 && TaskTitle.Count != 0 && TaskDescription.Count != 0){
+            CreateSMS(TaskName[0],TaskTitle[0],TaskDescription[0]);
+            TaskName.Remove(TaskName[0]);
+            TaskTitle.Remove(TaskTitle[0]);
+            TaskDescription.Remove(TaskDescription[0]);
+        }
+    }
+
+
+    private IEnumerator DoFade(CanvasGroup canvGroup, float start, float end, GameObject task, GameObject panel, GameObject destination){
         yield return new WaitForSecondsRealtime(5);
         float counter = 0f;
 
@@ -60,10 +87,11 @@ public class SmsManager : MonoBehaviour
         TaskList.SetActive(false);
         Destroy(task);
         panel.GetComponent<RectTransform>().position = destination.transform.position;
+        WorkInProgress = false;
         
     }
 
-    public IEnumerator DoSlide(GameObject panel){
+    private IEnumerator DoSlide(GameObject panel){
         float counter = 0f;
 
         while(counter < Duration)

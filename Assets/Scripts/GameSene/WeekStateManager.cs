@@ -103,21 +103,22 @@ public class WeekStateManager : MonoBehaviour{
             coding.GetComponent<Coding>().InnitTask();
             codingTask_task = true;
         }
+        
 
-        if(InGameTime.hour == 9 && InGameTime.minute == 5 && !coffee_task) {
-            coffee.GetComponent<Coffee>().InnitTask();
-            coffee_task = true;
-        }
+        // if(InGameTime.hour == 8 && InGameTime.minute == 2 && !coffee_task) {
+        //     coffee.GetComponent<Coffee>().InnitTask();
+        //     coffee_task = true;
+        // }
 
-        if(InGameTime.hour == 10 && InGameTime.minute == 30 && !printer_task) {
-            printer.GetComponent<Printer>().InnitTask();
-            printer_task = true;
-        }
+        // if(InGameTime.hour == 10 && InGameTime.minute == 30 && !printer_task) {
+        //     printer.GetComponent<Printer>().InnitTask();
+        //     printer_task = true;
+        // }
 
-        if(InGameTime.hour == 11 && InGameTime.minute == 15 && !thermostatic_task) {
-            thermostatic.GetComponent<Thermostat>().InnitTask();
-            thermostatic_task = true;
-        }
+        // if(InGameTime.hour == 11 && InGameTime.minute == 15 && !thermostatic_task) {
+        //     thermostatic.GetComponent<Thermostat>().InnitTask();
+        //     thermostatic_task = true;
+        // }
 
     }
 

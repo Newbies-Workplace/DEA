@@ -12,38 +12,41 @@ public class PcActivitiesHandler : MonoBehaviour
     [SerializeField] private Button CopyCode_Button;
     [SerializeField] private GameObject qte_copy;
     [SerializeField] private GameObject qte_paste;
+    [SerializeField] private GameObject Panel;
     [SerializeField] private Button Paste_Button;
-    [SerializeField] private Button exit_button;
     [SerializeField] private TMP_Text CodeTextToPaste;
-    
+    private bool CanExit = true;
     public bool isBlocked = false;
 
     void Update()
     {
         IsWorkDoneHandler();
         Qte_handlers();
-        if(!IsWorkDone){
-            CodeHandler();
-        }
-
+        ExitPC();
+        if(!IsWorkDone) CodeHandler();
         
     }
 
+    void ExitPC(){
+        if(CanExit && Input.GetKeyDown(KeyCode.Escape)){
+            Panel.SetActive(false);
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = true;
+            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = true;
+            ThirdPersonController.isVisibleCursor = false;
+        }
+    }
 
     void Qte_handlers(){
-        bool isActive_copy = qte_copy.activeSelf;
-        bool isActive_paste = qte_paste.activeSelf;
-
-    
-
-        if(isActive_copy || isActive_paste){
-            exit_button.interactable = false;
+        if(qte_copy.activeSelf || qte_paste.activeSelf){
             isBlocked = true;
             UiDrag.canDrag = false;
-        }else{
+            CanExit = false;
+        }
+
+        if(!qte_copy.activeSelf || !qte_paste.activeSelf){
             isBlocked = false;
             UiDrag.canDrag = true;
-            exit_button.interactable = true;
+            CanExit = true;
         }
     }
 
@@ -61,7 +64,8 @@ public class PcActivitiesHandler : MonoBehaviour
             CodeTextToCopy.text = "Copied";
             CopyCode_Button.interactable = false;
             Paste_Button.interactable = true;
-        } else {
+        }
+        if(!IsTextInClipboard){
             CodeTextToCopy.text = "Copy Code";
             CopyCode_Button.interactable = true;
             Paste_Button.interactable = false;

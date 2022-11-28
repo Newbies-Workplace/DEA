@@ -61,7 +61,7 @@ public class Intercom : MonoBehaviour
     public void InnitTask(){
         num = Random.Range(0,2);
         title.text = InterLines.taskWho[num];
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit",InterLines.textName[num],InterLines.textInit[num]);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("Taskinnit",InterLines.textName[num],InterLines.textInit[num]);
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,InterLines.textDescription[num]);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
@@ -79,14 +79,14 @@ public class Intercom : MonoBehaviour
     private void TaskComplete(){
         Panel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Intercom Task Complete",InterLines.textWon[num]);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskComplete","Intercom Task Complete",InterLines.textWon[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
         Panel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFaile","Intercom Task Failed",InterLines.textLost[num]);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskFaile","Intercom Task Failed",InterLines.textLost[num]);
         StaticClass.Grade--;
         DestroyTask();   
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PanelManager : MonoBehaviour
 {
-	public GameObject Panel;
+	[SerializeField] private GameObject Panel;
     [SerializeField] private GameObject pc_activities_handler;
 	
     public void HidePanel()
@@ -36,13 +36,10 @@ public class PanelManager : MonoBehaviour
     public void ToggleApplication()
     {
         if (!pc_activities_handler.GetComponent<PcActivitiesHandler>().isBlocked){
-            bool isActive = Panel.activeSelf;
             RectTransform rectTransform = Panel.GetComponent<RectTransform>();
-            Panel.SetActive(!isActive);
+            Panel.SetActive(!Panel.activeSelf);
             rectTransform.SetAsLastSibling();
         }
-
 	}
-
 
 }

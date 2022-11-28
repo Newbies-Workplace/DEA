@@ -12,19 +12,21 @@ public class DayTitleFadeOut : MonoBehaviour
     private bool mFaded = false;
     public float Duration = 5.4f;
 
-    void Start(){
+
+    public void MakeDayTitle(){
         panel.SetActive(true);
         Fade();
     }
 
-    public void Fade(){
+
+    private void Fade(){
 
         StartCoroutine(DoFade(canvGroup, canvGroup.alpha, mFaded ? 1 : 0));
 
         mFaded = !mFaded;
     }
 
-    public IEnumerator DoFade(CanvasGroup canvGroup, float start, float end){
+    private IEnumerator DoFade(CanvasGroup canvGroup, float start, float end){
         yield return new WaitForSecondsRealtime(2);
         float counter = 0f;
 

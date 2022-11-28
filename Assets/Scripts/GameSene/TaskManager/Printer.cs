@@ -43,7 +43,7 @@ public class Printer : MonoBehaviour
 
     public void InnitTask(){
         num = Random.Range(0,3);
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit",PrinterLines.textName[num],PrinterLines.textInit[num]);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("Taskinnit",PrinterLines.textName[num],PrinterLines.textInit[num]);
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,PrinterLines.textDescription[num]);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
@@ -58,12 +58,12 @@ public class Printer : MonoBehaviour
     }
 
     private void TaskComplete(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Printer Task Complete",PrinterLines.textLost[num]);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskComplete","Printer Task Complete",PrinterLines.textLost[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFaile","Printer Task Failed",PrinterLines.textWon[num]);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskFaile","Printer Task Failed",PrinterLines.textWon[num]);
         StaticClass.Grade--;
         DestroyTask();   
     }

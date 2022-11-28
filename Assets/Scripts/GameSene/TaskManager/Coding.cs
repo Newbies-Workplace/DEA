@@ -17,6 +17,9 @@ public class Coding : MonoBehaviour
 
     //need for task
     private GameObject task;
+    private TaskTimer tasktimer;
+    private ThirdPersonController Player;
+    private SmsManager sms;
     private int hour = 5; 
     private int minute = 30;
     private string taskname = "Coding";
@@ -29,30 +32,29 @@ public class Coding : MonoBehaviour
     public bool QuestActive;
     private int num;
 
+    void Start(){
+        Player = GameObject.Find("Player").GetComponent<ThirdPersonController>();
+        sms = GameObject.Find("Sms Manager").GetComponent<SmsManager>();
+    }
 
     public void InnitTask(){
         num = Random.Range(0,3);
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit",CodingLines.textName[num],CodingLines.textInit[num]);
+        sms.TaskQueue("Taskinnit",CodingLines.textName[num],CodingLines.textInit[num]);
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         if(task != null){
-            task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
-            task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
-            task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
+            tasktimer = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>();
+            tasktimer.hour = hour;
+            tasktimer.minute = minute;
+            tasktimer.isRunning = true;
         }
 
     }
 
     private void DisablePlayer(){
-        if(WorkPanel.activeSelf){
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = false;
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = false;
-            ThirdPersonController.isVisibleCursor = true;
-        }else{
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = true;
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = true;
-            ThirdPersonController.isVisibleCursor = false;
-        }
+        Player.can_move = false;
+        Player.can_move_camera = false;
+        ThirdPersonController.isVisibleCursor = true;
     }
 
     private void CheckTaskStatus(){
@@ -62,20 +64,25 @@ public class Coding : MonoBehaviour
     }
 
     private void TaskComplete(){
-        WorkPanel.SetActive(false);
-        DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Coding Task Complete",CodingLines.textWon[num]);
+        ExitTask();
+        sms.TaskQueue("TaskComplete","Coding Task Complete",CodingLines.textWon[num]);
         pc_activities_handler.GetComponent<PcActivitiesHandler>().IsWorkDone = true;
         DestroyTask();
     } 
 
     private void TaskFailed(){
-        WorkPanel.SetActive(false);
-        DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Coding Task Failed",CodingLines.textLost[num]);
+        ExitTask();
+        sms.TaskQueue("TaskFailed","Coding Task Failed",CodingLines.textLost[num]);
         pc_activities_handler.GetComponent<PcActivitiesHandler>().IsWorkDone = true;
         StaticClass.Grade--;
         DestroyTask();   
+    }
+
+    private void ExitTask(){
+        WorkPanel.SetActive(false);
+        Player.can_move = true;
+        Player.can_move_camera = true;
+        ThirdPersonController.isVisibleCursor = false;
     }
 
     private void DestroyTask(){

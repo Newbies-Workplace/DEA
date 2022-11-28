@@ -56,7 +56,7 @@ public class Coffee : MonoBehaviour
 
     public void InnitTask(){
         num = Random.Range(0,4);
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("Taskinnit",CoffeeLines.textName[num],CoffeeLines.textInit[num]);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("Taskinnit",CoffeeLines.textName[num],CoffeeLines.textInit[num]);
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,CoffeeLines.textDescription[num]);
         task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
@@ -73,14 +73,14 @@ public class Coffee : MonoBehaviour
     private void TaskComplete(){
         Panel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskComplete","Coffee Task Complete",CoffeeLines.textWon[num]);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskComplete","Coffee Task Complete",CoffeeLines.textWon[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
         Panel.SetActive(false);
         DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().CreateSMS("TaskFailed","Coffee Task Failed",CoffeeLines.textLost[num]);
+        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskFailed","Coffee Task Failed",CoffeeLines.textLost[num]);
         StaticClass.Grade--;
         DestroyTask();   
     }

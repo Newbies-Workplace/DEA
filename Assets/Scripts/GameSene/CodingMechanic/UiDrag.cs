@@ -57,14 +57,14 @@ public class UiDrag : MonoBehaviour, IPointerDownHandler, IEndDragHandler, IDrag
                 DragXPosition = (panelWidth-objectWidth)/2;
             }
     
-            if (DragYPosition <= -(panelHeight-objectHeight)/2)
+            if (DragYPosition <= -(panelHeight-objectHeight)/2+TaskBarHeight)
             {
-                DragYPosition = -(panelHeight-objectHeight)/2;
+                DragYPosition = -(panelHeight-objectHeight)/2+TaskBarHeight;
             }
     
-            if (DragYPosition >= ((panelHeight-objectHeight)/2)-TaskBarHeight)
+            if (DragYPosition >= ((panelHeight-objectHeight)/2))
             {
-                DragYPosition = ((panelHeight-objectHeight)/2)-TaskBarHeight;
+                DragYPosition = ((panelHeight-objectHeight)/2);
             }
     
     
