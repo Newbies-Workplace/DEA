@@ -10,6 +10,7 @@ public class ExitPanel : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape)){
             Panel.SetActive(false);
+            PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
         }
     }
 }

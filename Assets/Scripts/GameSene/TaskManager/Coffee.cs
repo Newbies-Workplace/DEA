@@ -10,6 +10,10 @@ public class Coffee : MonoBehaviour
     [SerializeField] private GameObject indicator;
     [SerializeField] private bool indicator_ison = false;
 
+    Ray RayForward;
+    Ray RayLeft;
+    Ray RayRight;
+
     public float range = 2;
     int max_dist = 2;
     Quaternion rightAngle;
@@ -20,6 +24,9 @@ public class Coffee : MonoBehaviour
     private GameObject task;
     private int hour = 1; 
     private int minute = 15;
+    private TaskTimer tasktimer;
+    private ThirdPersonController Player;
+    private SmsManager sms;
     private string taskname = "Coffee";
     private string tasktitle = "Coffee";
 
@@ -30,6 +37,8 @@ public class Coffee : MonoBehaviour
     public static int num;
 
     void Start(){
+        Player = GameObject.Find("Player").GetComponent<ThirdPersonController>();
+        sms = GameObject.Find("Sms Manager").GetComponent<SmsManager>();
         leftAngle = Quaternion.Euler(20,30,0);
         rightAngle = Quaternion.Euler(20,-30,0);
         centerAngle = Quaternion.Euler(20,0,0);
@@ -42,45 +51,35 @@ public class Coffee : MonoBehaviour
     }
 
     private void DisablePlayer(){
-        if(Panel.activeSelf){
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = false;
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = false;
-            ThirdPersonController.isVisibleCursor = true;
-        }else{
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = true;
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = true;
-            ThirdPersonController.isVisibleCursor = false;
-        }
+        PlayerStateManager.Instance.UpdateState(PlayerState.UI);
     }
 
 
     public void InnitTask(){
         num = Random.Range(0,4);
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("Taskinnit",CoffeeLines.textName[num],CoffeeLines.textInit[num]);
+        sms.TaskQueue("Taskinnit",CoffeeLines.textName[num],CoffeeLines.textInit[num]);
         QuestActive = true;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,CoffeeLines.textDescription[num]);
-        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
-        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
-        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
+        tasktimer = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>();
+        tasktimer.hour = hour;
+        tasktimer.minute = minute;
+        tasktimer.isRunning = true;
     }
 
     private void CheckTaskStatus(){
-        TimesUp = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().TimesUp;
-        if(TimesUp && QuestActive) TaskFailed();
+        if(tasktimer.TimesUp && QuestActive) TaskFailed();
         if(isDone && QuestActive) TaskComplete();
     }
 
     private void TaskComplete(){
-        Panel.SetActive(false);
-        DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskComplete","Coffee Task Complete",CoffeeLines.textWon[num]);
+        ExitTask();
+        sms.TaskQueue("TaskComplete","Coffee Task Complete",CoffeeLines.textWon[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
-        Panel.SetActive(false);
-        DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskFailed","Coffee Task Failed",CoffeeLines.textLost[num]);
+        ExitTask();
+        sms.TaskQueue("TaskFailed","Coffee Task Failed",CoffeeLines.textLost[num]);
         StaticClass.Grade--;
         DestroyTask();   
     }
@@ -90,53 +89,63 @@ public class Coffee : MonoBehaviour
         QuestActive = false;
     }
 
+    private void ExitTask(){
+        if(Panel.activeSelf){
+            Panel.SetActive(false);
+            PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
+        }
+    }
+
     private void AccessObject(){
-        DisablePlayer();
-        if(isNear(4, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(Panel != null) Panel.SetActive(true);
+        if(isNear(4, player, heart)){
+            if (Input.GetKeyDown(KeyCode.E)){ 
+                if(Panel != null){ 
+                    Panel.SetActive(true);
+                    DisablePlayer();
+                }
+            }
+        }
+    }
+
+    private void DrawRayCast(){
+        Vector3 forward = centerAngle*Vector3.forward;
+        Vector3 left = leftAngle*Vector3.forward;
+        Vector3 right = rightAngle*Vector3.forward;
+        RayForward = new Ray(transform.position, transform.TransformDirection(forward * range));
+        RayLeft = new Ray(transform.position, transform.TransformDirection(left * range));
+        RayRight = new Ray(transform.position, transform.TransformDirection(right * range));
+        Debug.DrawRay(transform.position, transform.TransformDirection(forward * range));
+        Debug.DrawRay(transform.position, transform.TransformDirection(left * range));
+        Debug.DrawRay(transform.position, transform.TransformDirection(right * range));
     }
 
 
     void Update()
     {
         indicator_ison = false;
+        DrawRayCast();
 
-        Vector3 forward = centerAngle*Vector3.forward;
-        Vector3 left = leftAngle*Vector3.forward;
-        Vector3 right = rightAngle*Vector3.forward;
-        Ray RayForward = new Ray(transform.position, transform.TransformDirection(forward * range));
-        Ray RayLeft = new Ray(transform.position, transform.TransformDirection(left * range));
-        Ray RayRight = new Ray(transform.position, transform.TransformDirection(right * range));
-        Debug.DrawRay(transform.position, transform.TransformDirection(forward * range));
-        Debug.DrawRay(transform.position, transform.TransformDirection(left * range));
-        Debug.DrawRay(transform.position, transform.TransformDirection(right * range));
-
-
-        if (Physics.Raycast(RayForward, out RaycastHit hit, range))
-        {
-            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
-            { 
+        if (Physics.Raycast(RayForward, out RaycastHit hit, range)){
+            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true ){ 
                 if(QuestActive) AccessObject();
                 indicator_ison = true;
             }
         }
 
-            if (Physics.Raycast(RayLeft, out hit, range))
-        {
-            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
-            {
+        if (Physics.Raycast(RayLeft, out hit, range)){
+            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true ){
                 if(QuestActive) AccessObject();
                 indicator_ison = true;
             }
         }
 
-            if (Physics.Raycast(RayRight, out hit, range))
-        {
-            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
-            {
+        if (Physics.Raycast(RayRight, out hit, range)){
+            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true ){
                 if(QuestActive) AccessObject();
                 indicator_ison = true;
             }
         }
+
         if(QuestActive) CheckTaskStatus();
         if(QuestActive) indicator.SetActive(indicator_ison);
         if(!QuestActive) indicator.SetActive(false);

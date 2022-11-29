@@ -30,9 +30,7 @@ public class PcActivitiesHandler : MonoBehaviour
     void ExitPC(){
         if(CanExit && Input.GetKeyDown(KeyCode.Escape)){
             Panel.SetActive(false);
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = true;
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = true;
-            ThirdPersonController.isVisibleCursor = false;
+            PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
         }
     }
 

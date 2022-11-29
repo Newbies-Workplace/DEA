@@ -9,7 +9,7 @@ public class Coding : MonoBehaviour
     public GameObject player;
     public GameObject heart; 
     public GameObject WorkPanel;
-    public GameObject TodoPanel;
+    public GameObject TodoPanel; 
     [SerializeField] private CanvasGroup canvGroup;
     [SerializeField] private GameObject pc_activities_handler;
     [SerializeField] private GameObject indicator;
@@ -52,14 +52,11 @@ public class Coding : MonoBehaviour
     }
 
     private void DisablePlayer(){
-        Player.can_move = false;
-        Player.can_move_camera = false;
-        ThirdPersonController.isVisibleCursor = true;
+        PlayerStateManager.Instance.UpdateState(PlayerState.UI);
     }
 
     private void CheckTaskStatus(){
-        TimesUp = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().TimesUp;
-        if(TimesUp && QuestActive) TaskFailed();
+        if(tasktimer.TimesUp && QuestActive) TaskFailed();
         if(isDone && QuestActive) TaskComplete();
     }
 
@@ -79,10 +76,10 @@ public class Coding : MonoBehaviour
     }
 
     private void ExitTask(){
-        WorkPanel.SetActive(false);
-        Player.can_move = true;
-        Player.can_move_camera = true;
-        ThirdPersonController.isVisibleCursor = false;
+        if(WorkPanel.activeSelf){
+            WorkPanel.SetActive(false);
+            PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
+        }
     }
 
     private void DestroyTask(){

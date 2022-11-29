@@ -4,47 +4,27 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    int hour, minute, day; 
-    public static int day_start_hour = 8;
-    bool checkTime = false;
     public int EndDayValue = 9;
-    public int FinalEndDayValue = 13;
-    GameState State;
+    public static int FinalEndDayValue = 13;
  
-
-    void Awake(){
-        GameManager.OnGameStateChanged += GameManagerOnOnGameStateChanged;
-    }
-
-    void Destroy(){
-        GameManager.OnGameStateChanged -= GameManagerOnOnGameStateChanged;
-    }
-
-    private void GameManagerOnOnGameStateChanged(GameState state){
-        if(state == GameState.WorkTime) checkTime = true;
-        State = state;   
-    }
 
     void Update()
     {
-        hour = InGameTime.hour;
-        minute = InGameTime.minute;
-        day = InGameTime.day;   
-        if(checkTime) DayCycleHandler(State);
+        DayCycleHandler();
     }
 
 
-    void DayCycleHandler(GameState State){
+    void DayCycleHandler( ){
         
-        if(hour >= EndDayValue && minute > 0 && State == GameState.WorkTime){
+        if(InGameTime.hour >= EndDayValue && InGameTime.minute > 0 && GameManager.Instance.State == GameState.WorkTime){
             GameManager.Instance.UpdateGameState(GameState.EndOfDay);
         }
 
-        if(hour >= FinalEndDayValue && minute > 0 && State == GameState.EndOfDay){
+        if(InGameTime.hour >= FinalEndDayValue && InGameTime.minute > 0 && GameManager.Instance.State == GameState.EndOfDay){
             GameManager.Instance.UpdateGameState(GameState.DaySummary);
         }
 
-        if(hour >= FinalEndDayValue && minute > 0 && State == GameState.EndOfDay && StaticClass.Weekday == 5){
+        if(InGameTime.hour >= FinalEndDayValue && InGameTime.minute > 0 && GameManager.Instance.State == GameState.EndOfDay && StaticClass.Weekday == 5){
             GameManager.Instance.UpdateGameState(GameState.WeekEnd);
         }
     }
