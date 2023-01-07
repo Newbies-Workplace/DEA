@@ -47,7 +47,7 @@ public class IntercomTask : MonoBehaviour
                 Debug.Log("+Repuration");
             }
             else{
-                Debug.Log("-Repuration");
+                StaticClass.Grade--;
             }
             //manage points and reputtation someday
         }
@@ -61,6 +61,11 @@ public class IntercomTask : MonoBehaviour
         if(isTaskActive){
             DisplayText.text = Description;
         }
+    }
+
+    public void Reset(){
+        MadeChoice = false;
+        isTaskActive = false;
     }
 
     void Update(){

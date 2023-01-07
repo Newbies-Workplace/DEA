@@ -18,6 +18,8 @@ public class Printer : MonoBehaviour
     Quaternion centerAngle;
 
     private GameObject task;
+    private SmsManager sms;
+    private TaskTimer tasktimer;
     private int hour = 1; 
     private int minute = 30;
     private string taskname = "Printer";
@@ -33,6 +35,7 @@ public class Printer : MonoBehaviour
         leftAngle = Quaternion.Euler(10,-30,0);
         rightAngle = Quaternion.Euler(10,30,0);
         centerAngle = Quaternion.Euler(10,0,0);
+        sms = GameObject.Find("Sms Manager").GetComponent<SmsManager>();
     }
 
     private bool isNear(int max_dist, GameObject target, GameObject heart){
@@ -43,32 +46,34 @@ public class Printer : MonoBehaviour
 
     public void InnitTask(){
         num = Random.Range(0,3);
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("Taskinnit",PrinterLines.textName[num],PrinterLines.textInit[num]);
+        sms.TaskQueue("Taskinnit",PrinterLines.textName[num],PrinterLines.textInit[num]);
         QuestActive = true;
+        isDone = false;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,PrinterLines.textDescription[num]);
-        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
-        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
-        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
+        tasktimer = task.transform.Find("title").Find("Time").GetComponent<TaskTimer>();
+        tasktimer.hour = hour;
+        tasktimer.minute = minute;
+        tasktimer.isRunning = true;
     }
 
     private void CheckTaskStatus(){
-        TimesUp = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().TimesUp;
-        if(TimesUp && QuestActive) TaskFailed();
+        if(tasktimer.TimesUp && QuestActive) TaskFailed();
         if(isDone && QuestActive) TaskComplete();
     }
 
     private void TaskComplete(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskComplete","Printer Task Complete",PrinterLines.textLost[num]);
+        sms.TaskQueue("TaskComplete","Printer Task Complete",PrinterLines.textLost[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskFaile","Printer Task Failed",PrinterLines.textWon[num]);
+        sms.TaskQueue("TaskFaile","Printer Task Failed",PrinterLines.textWon[num]);
         StaticClass.Grade--;
         DestroyTask();   
     }
 
     private void DestroyTask(){
+        WeekStateManager.Instance.PrinterDone();
         Destroy(task);
         QuestActive = false;
     }

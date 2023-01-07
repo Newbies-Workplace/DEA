@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Coffee : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Coffee : MonoBehaviour
     [SerializeField] private GameObject Panel;
     [SerializeField] private GameObject indicator;
     [SerializeField] private bool indicator_ison = false;
+    [SerializeField] private TMP_Text machine_sms;
+    [SerializeField] private TMP_Text machine_name;
 
     Ray RayForward;
     Ray RayLeft;
@@ -54,13 +57,15 @@ public class Coffee : MonoBehaviour
         PlayerStateManager.Instance.UpdateState(PlayerState.UI);
     }
 
-
     public void InnitTask(){
         num = Random.Range(0,4);
         sms.TaskQueue("Taskinnit",CoffeeLines.textName[num],CoffeeLines.textInit[num]);
         QuestActive = true;
+        isDone = false;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,CoffeeLines.textDescription[num]);
-        tasktimer = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>();
+        machine_name.text = CoffeeLines.textName[num];
+        machine_sms.text = CoffeeLines.textDescription[num];
+        tasktimer = task.transform.Find("title").Find("Time").GetComponent<TaskTimer>();
         tasktimer.hour = hour;
         tasktimer.minute = minute;
         tasktimer.isRunning = true;
@@ -88,12 +93,11 @@ public class Coffee : MonoBehaviour
         Destroy(task);
         QuestActive = false;
     }
-
+ 
     private void ExitTask(){
-        if(Panel.activeSelf){
-            Panel.SetActive(false);
-            PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
-        }
+        if(Panel.activeSelf) Panel.SetActive(false);
+        WeekStateManager.Instance.CoffeeDone();
+        PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
     }
 
     private void AccessObject(){

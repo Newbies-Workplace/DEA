@@ -11,7 +11,7 @@ public class ThermoLines : MonoBehaviour
     };
 
     public static List<string> textInit = new List<string> {
-        "Koksownik sie nam wypalil, we kliknij klime z 25 bedzie git",
+        "Koksownik sie nam wypalil, we kliknij klime z 21 bedzie git",
         "Brrr, ale tu zimno. Zwieksz temperature na 26",
         "Troche chlodu nikomu nie zaszkodzi",
     };
@@ -29,14 +29,14 @@ public class ThermoLines : MonoBehaviour
     };
 
     public static List<string> textDescription = new List<string> {
-        "Zmien temperature na 25",
+        "Zmien temperature na 21",
         "Zmien temperature na 26",
         "Zmien temperature na 15",
     };
 
 
     public static List<int> taskTemp = new List<int> {
-        25,
+        21,
         26,
         15,
     };

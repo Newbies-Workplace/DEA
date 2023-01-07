@@ -88,11 +88,39 @@ public class WeekStateManager : MonoBehaviour{
         if(StaticClass.Weekday == 5) UpdateState(State.Friday);
     }
 
+
+    // private bool codingTask_task = false;
+    // private bool intercom_task = false;
+    // private bool coffee_task = false;
+    // private bool thermostatic_task = false;
+    // private bool printer_task = false;
+
+    public void CodingDone(){
+        codingTask_task = false;
+    }
+
+    public void IntercomDone(){
+        intercom_task = false;
+    }
+
+    public void CoffeeDone(){
+        coffee_task = false;
+    }
+
+    public void ThermostaticDone(){
+        thermostatic_task = false;
+    }
+
+    public void PrinterDone(){
+        printer_task = false;
+    }
+
     //caling those are here:
     // coding.GetComponent<Coding>().InnitTask();
     // coffee.GetComponent<Coffee>().InnitTask();
     // thermostatic.GetComponent<thermostatic>().InnitTask();
     // intercom.GetComponent<Intercom>().InnitTask();
+    //printer
 
     //----------------------------------------------------------------
     //MONDAY
@@ -103,23 +131,31 @@ public class WeekStateManager : MonoBehaviour{
             coding.GetComponent<Coding>().InnitTask();
             codingTask_task = true;
         }
-        
 
-        // if(InGameTime.hour == 8 && InGameTime.minute == 2 && !coffee_task) {
-        //     coffee.GetComponent<Coffee>().InnitTask();
-        //     coffee_task = true;
-        // }
+        if(InGameTime.hour == 9 && InGameTime.minute == 30 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
+            coffee_task = true;
+        }
 
-        // if(InGameTime.hour == 10 && InGameTime.minute == 30 && !printer_task) {
-        //     printer.GetComponent<Printer>().InnitTask();
-        //     printer_task = true;
-        // }
+        if(InGameTime.hour == 10 && InGameTime.minute == 1 && !printer_task) {
+            printer.GetComponent<Printer>().InnitTask();
+            printer_task = true;
+        }
 
-        // if(InGameTime.hour == 11 && InGameTime.minute == 15 && !thermostatic_task) {
-        //     thermostatic.GetComponent<Thermostat>().InnitTask();
-        //     thermostatic_task = true;
-        // }
+        if(InGameTime.hour == 10 && InGameTime.minute == 59 && !thermostatic_task) {
+            thermostatic.GetComponent<Thermostat>().InnitTask();
+            thermostatic_task = true;
+        }
 
+        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !intercom_task) {
+            intercom.GetComponent<Intercom>().InnitTask();
+            intercom_task = true;
+        }
+
+        if(InGameTime.hour == 12 && InGameTime.minute == 05 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
+            coffee_task = true;
+        }
     }
 
 
@@ -132,19 +168,123 @@ public class WeekStateManager : MonoBehaviour{
             thermostatic_task = true;
         }
 
-        if(InGameTime.hour == 9 && InGameTime.minute == 2 && !coffee_task) {
+        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !coffee_task) {
             coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
 
-        if(InGameTime.hour == 10 && InGameTime.minute == 25 && !codingTask_task) {
+        if(InGameTime.hour == 9 && InGameTime.minute == 0 && !codingTask_task) {
             coding.GetComponent<Coding>().InnitTask();
             codingTask_task = true;
         }
 
-        if(InGameTime.hour == 11 && InGameTime.minute == 15 && !intercom_task) {
+        if(InGameTime.hour == 9 && InGameTime.minute == 16 && !printer_task) {
+            printer.GetComponent<Printer>().InnitTask();
+            printer_task = true;
+        }
+
+        if(InGameTime.hour == 9 && InGameTime.minute == 45 && !intercom_task) {
             intercom.GetComponent<Intercom>().InnitTask();
             intercom_task = true;
+        }
+
+        if(InGameTime.hour == 10 && InGameTime.minute == 25 && !thermostatic_task) {
+            thermostatic.GetComponent<Thermostat>().InnitTask();
+            thermostatic_task = true;
+        }
+
+        if(InGameTime.hour == 11 && InGameTime.minute == 5 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
+            coffee_task = true;
+        }
+
+        if(InGameTime.hour == 12 && InGameTime.minute == 11 && !printer_task) {
+            printer.GetComponent<Printer>().InnitTask();
+            printer_task = true;
+        }
+    }
+
+
+    //----------------------------------------------------------------
+    //WEDNESDAY
+    //----------------------------------------------------------------
+    private void WednesdayUpdate(){
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 2 && !intercom_task) {
+            intercom.GetComponent<Intercom>().InnitTask();
+            intercom_task = true;
+        }        
+        
+        if(InGameTime.hour == 8 && InGameTime.minute == 25 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
+            coffee_task = true;
+        }
+
+        if(InGameTime.hour == 9 && InGameTime.minute == 1 && !thermostatic_task) {
+            thermostatic.GetComponent<Thermostat>().InnitTask();
+            thermostatic_task = true;
+        }
+
+        if(InGameTime.hour == 9 && InGameTime.minute == 31 && !printer_task) {
+            printer.GetComponent<Printer>().InnitTask();
+            printer_task = true;
+        }
+
+        if(InGameTime.hour == 9 && InGameTime.minute == 55 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
+            coffee_task = true;
+        }
+
+        if(InGameTime.hour == 10 && InGameTime.minute == 40 && !intercom_task) {
+            intercom.GetComponent<Intercom>().InnitTask();
+            intercom_task = true;
+        }   
+
+        if(InGameTime.hour == 11 && InGameTime.minute == 25 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
+            coffee_task = true;
+        }
+        
+        if(InGameTime.hour == 12 && InGameTime.minute == 1 && !printer_task) {
+            printer.GetComponent<Printer>().InnitTask();
+            printer_task = true;
+        }
+    }
+
+
+    //----------------------------------------------------------------
+    //THURSDAY
+    //----------------------------------------------------------------
+    private void ThursdayUpdate(){
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 2 && !codingTask_task) {
+            coding.GetComponent<Coding>().InnitTask();
+            codingTask_task = true;
+        }
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 20 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
+            coffee_task = true;
+        }
+
+        if(InGameTime.hour == 9 && InGameTime.minute == 1 && !intercom_task) {
+            intercom.GetComponent<Intercom>().InnitTask();
+            intercom_task = true;
+        } 
+
+        if(InGameTime.hour == 9 && InGameTime.minute == 52 && !printer_task) {
+            printer.GetComponent<Printer>().InnitTask();
+            printer_task = true;
+        }
+
+        if(InGameTime.hour == 10 && InGameTime.minute == 32 && !coffee_task) {
+            coffee.GetComponent<Coffee>().InnitTask();
+            coffee_task = true;
+        }
+
+        if(InGameTime.hour == 11 && InGameTime.minute == 15 && !printer_task) {
+            printer.GetComponent<Printer>().InnitTask();
+            printer_task = true;
         }
 
         if(InGameTime.hour == 12 && InGameTime.minute == 1 && !thermostatic_task) {
@@ -155,92 +295,36 @@ public class WeekStateManager : MonoBehaviour{
 
 
     //----------------------------------------------------------------
-    //WEDNESDAY
+    //FRIDAY
     //----------------------------------------------------------------
-    private void WednesdayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 2 && !intercom_task) {
-            intercom.GetComponent<Intercom>().InnitTask();
-            intercom_task = true;
-        }        
-        
-        if(InGameTime.hour == 9 && InGameTime.minute == 3 && !coffee_task) {
+    private void FridayUpdate(){
+
+        if(InGameTime.hour == 8 && InGameTime.minute == 2 && !codingTask_task) {
+            coding.GetComponent<Coding>().InnitTask();
+            codingTask_task = true;
+        }
+
+        if(InGameTime.hour == 9 && InGameTime.minute == 30 && !coffee_task) {
             coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }
 
-        if(InGameTime.hour == 10 && InGameTime.minute == 25 && !thermostatic_task) {
+        if(InGameTime.hour == 10 && InGameTime.minute == 1 && !printer_task) {
+            printer.GetComponent<Printer>().InnitTask();
+            printer_task = true;
+        }
+
+        if(InGameTime.hour == 10 && InGameTime.minute == 59 && !thermostatic_task) {
             thermostatic.GetComponent<Thermostat>().InnitTask();
             thermostatic_task = true;
         }
 
-        if(InGameTime.hour == 11 && InGameTime.minute == 15 && !printer_task) {
-            printer.GetComponent<Printer>().InnitTask();
-            printer_task = true;
-        }
-
-        if(InGameTime.hour == 12 && InGameTime.minute == 1 && !codingTask_task) {
-            coding.GetComponent<Coding>().InnitTask();
-            codingTask_task = true;
-        }
-    }
-
-
-    //----------------------------------------------------------------
-    //THURSDAY
-    //----------------------------------------------------------------
-    private void ThursdayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 2 && !codingTask_task) {
-            coding.GetComponent<Coding>().InnitTask();
-            codingTask_task = true;
-        }
-
-        if(InGameTime.hour == 9 && InGameTime.minute == 15 && !coffee_task) {
-            coffee.GetComponent<Coffee>().InnitTask();
-            coffee_task = true;
-        }
-
-        if(InGameTime.hour == 10 && InGameTime.minute == 15 && !intercom_task) {
+        if(InGameTime.hour == 8 && InGameTime.minute == 30 && !intercom_task) {
             intercom.GetComponent<Intercom>().InnitTask();
             intercom_task = true;
-        } 
-
-        if(InGameTime.hour == 11 && InGameTime.minute == 15 && !printer_task) {
-            printer.GetComponent<Printer>().InnitTask();
-            printer_task = true;
         }
 
-        if(InGameTime.hour == 12 && InGameTime.minute == 5 && !coffee_task) {
-            coffee.GetComponent<Coffee>().InnitTask();
-            coffee_task = true;
-        }
-    }
-
-
-    //----------------------------------------------------------------
-    //FRIDAY
-    //----------------------------------------------------------------
-    private void FridayUpdate(){
-        if(InGameTime.hour == 8 && InGameTime.minute == 2 && !codingTask_task) {
-            coding.GetComponent<Coding>().InnitTask();
-            codingTask_task = true;
-        }
-
-        if(InGameTime.hour == 9 && InGameTime.minute == 15 && !coffee_task) {
-            coffee.GetComponent<Coffee>().InnitTask();
-            coffee_task = true;
-        }
-
-        if(InGameTime.hour == 10 && InGameTime.minute == 15 && !printer_task) {
-            printer.GetComponent<Printer>().InnitTask();
-            printer_task = true;
-        }
-
-        if(InGameTime.hour == 11 && InGameTime.minute == 15 && !intercom_task) {
-            intercom.GetComponent<Intercom>().InnitTask();
-            intercom_task = true;
-        } 
-
-        if(InGameTime.hour == 12 && InGameTime.minute == 1 && !coffee_task) {
+        if(InGameTime.hour == 12 && InGameTime.minute == 05 && !coffee_task) {
             coffee.GetComponent<Coffee>().InnitTask();
             coffee_task = true;
         }

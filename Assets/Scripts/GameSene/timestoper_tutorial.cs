@@ -11,9 +11,7 @@ public class timestoper_tutorial : MonoBehaviour
 
     public void CloseTutorial(){
         InGameTime.time_stop = false;
-        GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = true;
-        GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = true;
-        ThirdPersonController.isVisibleCursor = false;
+         PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
         player.enabled = true;
         Fade();
     }

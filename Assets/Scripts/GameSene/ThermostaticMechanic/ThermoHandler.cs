@@ -9,9 +9,14 @@ public class ThermoHandler : MonoBehaviour
 
     [SerializeField] private GameObject ThermoPanel;
     [SerializeField] private TMP_Text ThermoPanelText;
+
+    void Start(){
+        ThermoStatValue = 25;
+    }
+
     void Update()
     {
-        ThermoPanelText.text = ThermoStatValue+"*C";
+        ThermoPanelText.text = ThermoStatValue+"Celsius";
         if (Input.GetKeyDown(KeyCode.Escape)){
             ThermoPanel.SetActive(false);
         }

@@ -9,6 +9,7 @@ public class PanelHandler : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)){
+            PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
             Panel.SetActive(false);
         }
     }
