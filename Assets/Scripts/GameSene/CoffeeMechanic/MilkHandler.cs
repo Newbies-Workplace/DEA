@@ -19,7 +19,7 @@ public class MilkHandler : MonoBehaviour
     // }
 
     void Update(){
-        if(isMilk){
+        if(!isMilk){
             ColorBlock cb = Milk.colors;
             cb.normalColor = new Color32(255, 255 , 255, 255);
             cb.highlightedColor = new Color32(255, 255 , 255, 255);
@@ -27,7 +27,7 @@ public class MilkHandler : MonoBehaviour
             cb.selectedColor = new Color32(255, 255 , 255, 255);
             Milk.colors = cb;
         }
-        if(!isMilk){
+        if(isMilk){
             ColorBlock cb = Milk.colors;
             cb.normalColor = new Color32(63, 190 , 253, 100);
             cb.highlightedColor = new Color32(63, 190 , 253, 100);
