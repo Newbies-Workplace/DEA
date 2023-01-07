@@ -43,13 +43,7 @@ public class IntercomTask : MonoBehaviour
             
             intercom_task.GetComponent<Intercom>().isDone = true;
 
-            if (Choice == ChoiceGoal){
-                Debug.Log("+Repuration");
-            }
-            else{
-                StaticClass.Grade--;
-            }
-            //manage points and reputtation someday
+            if (Choice != ChoiceGoal) StaticClass.Grade--;
         }
     }
 
@@ -65,7 +59,8 @@ public class IntercomTask : MonoBehaviour
 
     public void Reset(){
         MadeChoice = false;
-        isTaskActive = false;
+        LetButton.interactable = true;
+        DontLetButton.interactable = true;
     }
 
     void Update(){

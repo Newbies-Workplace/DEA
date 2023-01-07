@@ -62,12 +62,12 @@ public class Printer : MonoBehaviour
     }
 
     private void TaskComplete(){
-        sms.TaskQueue("TaskComplete","Printer Task Complete",PrinterLines.textLost[num]);
+        sms.TaskQueue("TaskComplete","Printer Task Complete",PrinterLines.textWon[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
-        sms.TaskQueue("TaskFaile","Printer Task Failed",PrinterLines.textWon[num]);
+        sms.TaskQueue("TaskFailed","Printer Task Failed",PrinterLines.textLost[num]);
         StaticClass.Grade--;
         DestroyTask();   
     }
