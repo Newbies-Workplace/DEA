@@ -25,7 +25,7 @@ public class TaskManager : MonoBehaviour
         TaskDescription.GetComponent<TMP_Text>().text = taskdescription;
 
         //set time to none
-        GameObject TaskTime = task.transform.Find("title").gameObject.transform.Find("Timer").gameObject.transform.Find("Time").gameObject;       
+        GameObject TaskTime = task.transform.Find("title").gameObject.transform.Find("Time").gameObject;       
         TaskTime.GetComponent<TMP_Text>().text = "";
 
 

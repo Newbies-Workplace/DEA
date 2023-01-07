@@ -38,6 +38,6 @@ public class TaskTimer : MonoBehaviour{
     void DisplayTime(float timeToDisplay){
         float hour = Mathf.FloorToInt(timeToDisplay / 60 / 60); 
         float minute = Mathf.FloorToInt((timeToDisplay / 60) % 60);
-        TimerText.text = string.Format("{0:00}:{1:00}", hour, minute);
+        TimerText.text = string.Format("{0:00}:{1:00} left", hour, minute);
     }
 }

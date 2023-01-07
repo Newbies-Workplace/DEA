@@ -24,7 +24,7 @@ public class Coding : MonoBehaviour
     private int minute = 30;
     private string taskname = "Coding";
     private string tasktitle = "Coding Task";
-    private string taskdescription = "Idz do swojego komputera i zacznij prace";
+    private string taskdescription = "Go to your desk and start coding!";
 
     //task check variables
     public bool TimesUp = false;
@@ -41,9 +41,10 @@ public class Coding : MonoBehaviour
         num = Random.Range(0,3);
         sms.TaskQueue("Taskinnit",CodingLines.textName[num],CodingLines.textInit[num]);
         QuestActive = true;
+        isDone = false;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,taskdescription);
         if(task != null){
-            tasktimer = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>();
+            tasktimer = task.transform.Find("title").Find("Time").GetComponent<TaskTimer>();
             tasktimer.hour = hour;
             tasktimer.minute = minute;
             tasktimer.isRunning = true;
@@ -76,10 +77,9 @@ public class Coding : MonoBehaviour
     }
 
     private void ExitTask(){
-        if(WorkPanel.activeSelf){
-            WorkPanel.SetActive(false);
-            PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
-        }
+        if(WorkPanel.activeSelf) WorkPanel.SetActive(false);
+        WeekStateManager.Instance.CodingDone();
+        PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);
     }
 
     private void DestroyTask(){

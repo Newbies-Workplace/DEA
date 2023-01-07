@@ -12,6 +12,11 @@ public class Thermostat : MonoBehaviour
 
     public float range = 4;
     int max_dist = 4;
+
+    Ray RayForward;
+    Ray RayLeft;
+    Ray RayRight;
+
     Quaternion rightAngle;
     Quaternion leftAngle;
     Quaternion centerAngle;
@@ -26,11 +31,16 @@ public class Thermostat : MonoBehaviour
     //task check variables
     public bool TimesUp = false;
     public static bool isDone = false;
+    private ThirdPersonController Player;
+    private TaskTimer tasktimer;
+    private SmsManager sms;
     public static int TaskGoal = 30;
     public bool QuestActive;
     private int num;
 
     void Start(){
+        Player = GameObject.Find("Player").GetComponent<ThirdPersonController>();
+        sms = GameObject.Find("Sms Manager").GetComponent<SmsManager>();
         ThermoHandler.ThermoStatValue = 21;
         leftAngle = Quaternion.Euler(10,30,0);
         rightAngle = Quaternion.Euler(10,-30,0);
@@ -44,15 +54,7 @@ public class Thermostat : MonoBehaviour
     }
 
     private void DisablePlayer(){
-        if(ThermoPanel.activeSelf){
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = false;
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = false;
-            ThirdPersonController.isVisibleCursor = true;
-        }else{
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move = true;
-            GameObject.Find("Player").GetComponent<ThirdPersonController>().can_move_camera = true;
-            ThirdPersonController.isVisibleCursor = false;
-        }
+        PlayerStateManager.Instance.UpdateState(PlayerState.UI);
     }
 
 
@@ -61,93 +63,97 @@ public class Thermostat : MonoBehaviour
         TaskGoal = ThermoLines.taskTemp[num];
         GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("Taskinnit",ThermoLines.textName[num],ThermoLines.textInit[num]);
         QuestActive = true;
+        isDone = false;
         task = GameObject.Find("Task Manager").GetComponent<TaskManager>().CreateTaskOnList(taskname,tasktitle,ThermoLines.textDescription[num]);
-        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().hour = hour;
-        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().minute = minute;
-        task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().isRunning = true;
+        tasktimer = task.transform.Find("title").Find("Time").GetComponent<TaskTimer>();
+        tasktimer.hour = hour;
+        tasktimer.minute = minute;
+        tasktimer.isRunning = true;
     }
 
     private void CheckTaskStatus(){
-        TimesUp = task.transform.Find("title").Find("Timer").GetComponent<TaskTimer>().TimesUp;
-        if(TimesUp && QuestActive) TaskFailed();
+        if(tasktimer.TimesUp && QuestActive) TaskFailed();
         if(isDone && QuestActive) TaskComplete();
     }
 
     private void TaskComplete(){
-        ThermoPanel.SetActive(false);
-        DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskComplete","Intercom Task Complete",ThermoLines.textWon[num]);
+        ExitTask();
+        sms.TaskQueue("TaskComplete","Intercom Task Complete",ThermoLines.textWon[num]);
         DestroyTask();
     }
 
     private void TaskFailed(){
-        ThermoPanel.SetActive(false);
-        DisablePlayer();
-        GameObject.Find("Sms Manager").GetComponent<SmsManager>().TaskQueue("TaskFailed","Thermostat Task Failed",ThermoLines.textLost[num]);
+        ExitTask();
+        sms.TaskQueue("TaskFailed","Thermostat Task Failed",ThermoLines.textLost[num]);
+        StaticClass.Grade--;
         DestroyTask();   
     }
 
     private void DestroyTask(){
+        WeekStateManager.Instance.ThermostaticDone();
         Destroy(task);
         QuestActive = false;
     }
 
     private void AccessObject(){
-        DisablePlayer();
-        if(isNear(4, player, heart)) if (Input.GetKeyDown(KeyCode.E)) if(ThermoPanel != null) ThermoPanel.SetActive(true);
+        if(isNear(4, player, heart)){
+            if (Input.GetKeyDown(KeyCode.E)){ 
+                if(ThermoPanel != null){ 
+                    ThermoPanel.SetActive(true);
+                    DisablePlayer();
+                    Debug.Log("hello");
+                }
+            }
+        }
+    }
+
+    private void ExitTask(){
+        if(ThermoPanel.activeSelf) ThermoPanel.SetActive(false);
+        PlayerStateManager.Instance.UpdateState(PlayerState.FreeLook);   
+    }
+
+    private void DrawRayCast(){
+        Vector3 forward = centerAngle*Vector3.forward;
+        Vector3 left = leftAngle*Vector3.forward;
+        Vector3 right = rightAngle*Vector3.forward;
+        RayForward = new Ray(transform.position, transform.TransformDirection(forward * range));
+        RayLeft = new Ray(transform.position, transform.TransformDirection(left * range));
+        RayRight = new Ray(transform.position, transform.TransformDirection(right * range));
+        Debug.DrawRay(transform.position, transform.TransformDirection(forward * range));
+        Debug.DrawRay(transform.position, transform.TransformDirection(left * range));
+        Debug.DrawRay(transform.position, transform.TransformDirection(right * range));
     }
 
 
     void Update()
     {
-        if(QuestActive) CheckTaskStatus();
-    
         indicator_ison = false;
-        Vector3 forward = centerAngle*Vector3.forward;
-        Vector3 left = leftAngle*Vector3.forward;
-        Vector3 right = rightAngle*Vector3.forward;
-        Ray RayForward = new Ray(transform.position, transform.TransformDirection(forward * range));
-        Ray RayLeft = new Ray(transform.position, transform.TransformDirection(left * range));
-        Ray RayRight = new Ray(transform.position, transform.TransformDirection(right * range));
-        Debug.DrawRay(transform.position, transform.TransformDirection(forward * range));
-        Debug.DrawRay(transform.position, transform.TransformDirection(left * range));
-        Debug.DrawRay(transform.position, transform.TransformDirection(right * range));
-        
-        if (Physics.Raycast(RayForward, out RaycastHit hit, range))
-        {
-            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
-            {
+        DrawRayCast();
+
+        if (Physics.Raycast(RayForward, out RaycastHit hit, range)){
+            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true ){ 
                 if(QuestActive) AccessObject();
-                DisablePlayer();
                 indicator_ison = true;
-                // if(!isDone) AccessObject();
             }
         }
 
-        if (Physics.Raycast(RayLeft, out hit, range))
-        {
-            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
-            {
+        if (Physics.Raycast(RayLeft, out hit, range)){
+            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true ){
                 if(QuestActive) AccessObject();
-                DisablePlayer();
                 indicator_ison = true;
-                // if(!isDone) AccessObject();
             }
         }
 
-        if (Physics.Raycast(RayRight, out hit, range))
-        {
-            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true )
-            {
+        if (Physics.Raycast(RayRight, out hit, range)){
+            if (hit.collider.tag == "Player" && isNear(max_dist,player,heart) == true ){
                 if(QuestActive) AccessObject();
-                DisablePlayer();
                 indicator_ison = true;
-                // if(!isDone) AccessObject();
             }
         }
+
+        if(QuestActive) CheckTaskStatus();
         if(QuestActive) indicator.SetActive(indicator_ison);
         if(!QuestActive) indicator.SetActive(false);
         if(QuestActive && ThermoPanel.activeSelf == true) indicator.SetActive(false);
-
     }
 }
